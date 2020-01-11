@@ -1,0 +1,55 @@
+package com.capgemini.retailermaintenance.services;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.capgemini.retailermaintenance.dto.UserInfo;
+
+public class UserInfoServiceImpl implements UserInfoService{
+	@Autowired
+	private UserDAO dao;
+
+	@Override
+	public boolean register(UserInfo account) {
+		
+		return false;
+	}
+
+	@Override
+	public UserInfo login(UserInfo credentials) {
+		
+		return null;
+	}
+
+	@Override
+	public boolean addUser(UserInfo user) {
+		
+		return false;
+	}
+
+	@Override
+	public UserInfo getUser(int id) {
+		
+		return null;
+	}
+
+	@Override
+	public List<UserInfo> getAllUserss() {
+		
+		return null;
+	}
+
+	@Override
+	public boolean deleteUser(int id) {
+		
+		return false;
+	}
+
+	@Override
+	public boolean modifyUser(int id, String Password) {
+		
+		return false;
+	}
+
+}

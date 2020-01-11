@@ -1,0 +1,38 @@
+package com.capgemini.retailermaintenance.services;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.capgemini.retailermaintenance.dto.OrderInfo;
+@Service
+public class OrderInfoServiceImpl implements OrderInfoService{
+	@Autowired
+	private OrderDAO dao;
+
+	@Override
+	public boolean addOrder(OrderInfo product) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public OrderInfo getOrder(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<OrderInfo> getAllOredrs() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean deleteOrder(int id) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+}

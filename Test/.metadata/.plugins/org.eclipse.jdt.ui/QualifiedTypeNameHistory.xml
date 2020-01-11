@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="javax.persistence.Table"/>
+<fullyQualifiedTypeName name="javax.persistence.Entity"/>
+<fullyQualifiedTypeName name="javax.persistence.Column"/>
+<fullyQualifiedTypeName name="lombok.Data"/>
+<fullyQualifiedTypeName name="org.springframework.stereotype.Service"/>
+<fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
+<fullyQualifiedTypeName name="org.springframework.stereotype.Repository"/>
+<fullyQualifiedTypeName name="com.capgemini.retailermaintenance.services.ProductInfoService"/>
+<fullyQualifiedTypeName name="com.capgemini.retailermaintenance.dto.ProductInfoResponse"/>
+<fullyQualifiedTypeName name="com.capgemini.retailermaintenance.dto.ProductInfo"/>
+<fullyQualifiedTypeName name="com.capgemini.retailermaintenance.dao.OrderDAO"/>
+<fullyQualifiedTypeName name="com.capgemini.retailermaintenance.dao.UserDAO"/>
+<fullyQualifiedTypeName name="com.capgemini.retailermaintenance.exceptions.CustomException"/>
+<fullyQualifiedTypeName name="com.capgemini.retailermaintenance.services.UserInfoService"/>
+<fullyQualifiedTypeName name="com.capgemini.retailermaintenance.dto.UserInfoResponse"/>
+<fullyQualifiedTypeName name="com.capgemini.retailermaintenance.dto.UserInfo"/>
+<fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RestController"/>
+<fullyQualifiedTypeName name="com.capgemini.retailermaintenance.services.OrderInfoService"/>
+<fullyQualifiedTypeName name="com.capgemini.retailermaintenance.dto.OrderInfoResponse"/>
+<fullyQualifiedTypeName name="com.capgemini.retailermaintenance.dto.OrderInfo"/>
+</qualifiedTypeNameHistroy>

@@ -1,0 +1,29 @@
+package com.capgemini.retailermaintenance.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.capgemini.product.dto.Authentication;
+import com.capgemini.product.dto.AuthenticationResponse;
+import com.capgemini.retailermaintenance.dto.UserInfoResponse;
+import com.capgemini.retailermaintenance.services.ProductInfoService;
+import com.capgemini.retailermaintenance.services.UserInfoService;
+
+@RestController
+public class UserController {
+	@Autowired
+	UserInfoService service;
+	@PostMapping(path = "/register", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public UserInfoResponse register(@RequestBody UserInfoResponse account) {
+		UserInfoResponse response = new UserInfoResponse();
+		service.register(account);
+		response.setStatusCode(201);
+		response.setDescription("Success");
+		response.setMessage("Account created");
+		return response;
+	}
+
+}

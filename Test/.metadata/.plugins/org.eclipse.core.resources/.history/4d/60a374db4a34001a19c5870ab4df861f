@@ -1,0 +1,91 @@
+package com.capgemini.retailermaintenance.dao;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.PersistenceUnit;
+import javax.persistence.TypedQuery;
+
+import org.springframework.stereotype.Repository;
+
+import com.capgemini.product.exception.ProductException;
+import com.capgemini.retailermaintenance.dto.UserInfo;
+@Repository
+public class UserDAOImpl implements UserDAO{
+	@PersistenceUnit
+	EntityManagerFactory factory;
+
+	@Override
+	public boolean register(UserInfo account) {
+		EntityManager manager = factory.createEntityManager();
+		EntityTransaction transaction = manager.getTransaction();
+		try {
+			transaction.begin();
+			manager.persist(account);
+			transaction.commit();
+			return true;
+		} catch (Exception e) {
+			throw new ProductException("Account does not exist");
+		}
+	}
+
+	@Override
+	public UserInfo login(UserInfo credentials) {
+		EntityManager manager = factory.createEntityManager();
+		String jpql = "from Authentication where email=:email";
+		TypedQuery<UserInfo> query = manager.createQuery(jpql, UserInfo.class);
+		query.setParameter("email", credentials.getEmail());
+		try {
+			UserInfo account = query.getSingleResult();
+			if (account.getPassword().equals(credentials.getPassword())) {
+				return account;
+			} else {
+				System.out.println("credentials are invalid");
+				return null;
+			}
+		} catch (Exception e) {
+			throw new ProductException("Account does not exist");
+	 }
+	}
+
+	@Override
+	public boolean addUser(UserInfo user) {
+		EntityManager manager = factory.createEntityManager();
+		EntityTransaction transaction = manager.getTransaction();
+		try {
+			transaction.begin();
+			manager.persist(product);
+			transaction.commit();
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	@Override
+	public UserInfo getUser(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<UserInfo> getAllUsers() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean deleteUser(int id) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean modifyUser(int id, String Password) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+}

@@ -1,0 +1,13 @@
+package com.capgemini.retailermaintenance.dto;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+import lombok.Data;
+
+@Data
+@Entity
+@Table(name="productinfo")
+public class ProductInfo {
+
+}
