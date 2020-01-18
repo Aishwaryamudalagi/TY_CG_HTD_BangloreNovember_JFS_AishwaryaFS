@@ -1,0 +1,14 @@
+package com.capgemini.forestmanagementspringrest.dao;
+
+import java.util.List;
+
+import com.capgemini.forestmanagementhibernate.bean.Product;
+
+public interface ProductDAO {
+	public boolean addProduct(Product product);
+	public boolean deleteProduct(int productId);
+	public boolean updateProduct(int productId,Product product);
+	public List<Product> getProducts();
+	public Product getProduct(int productid);
+
+}

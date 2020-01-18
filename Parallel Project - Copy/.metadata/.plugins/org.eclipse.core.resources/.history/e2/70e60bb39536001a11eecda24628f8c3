@@ -1,0 +1,41 @@
+package com.capgemini.forestmanagementspringrest.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.capgemini.forestmanagementspringrest.services.AdminServices;
+
+@RestController
+public class AdminController {
+	@Autowired
+	private AdminServices service;
+	
+	@PostMapping(path = "/register", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public AuthenticationResponse register(@RequestBody Authentication account) {
+		AuthenticationResponse response = new AuthenticationResponse();
+		service.register(account);
+		response.setStatusCode(201);
+		response.setDescription("Success");
+		response.setMessage("Account created");
+		return response;
+	}
+
+	@PostMapping(path = "/login", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public AuthenticationResponse login(@RequestBody Authentication credentials) {
+		AuthenticationResponse response = new AuthenticationResponse();
+		Authentication account = service.login(credentials);
+		if (account != null) {
+			response.setStatusCode(201);
+			response.setDescription("Success");
+			response.setMessage("Logged in");
+			response.setAccount(Arrays.asList(account));
+		} else {
+			response.setStatusCode(405);
+			response.setDescription("Failure");
+			response.setMessage("Provide valid credentials");
+		}
+		return response;
+	}
+}
+	

@@ -1,0 +1,8 @@
+package com.capgemini.forestmanagementspringrest.dao;
+
+import com.capgemini.forestmanagementhibernate.bean.Admin;
+
+public interface AdminDAO {
+	public boolean login(int id,String password);
+
+}

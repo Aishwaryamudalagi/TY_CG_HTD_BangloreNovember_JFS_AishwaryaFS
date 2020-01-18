@@ -1,0 +1,9 @@
+package com.capgemini.forestmanagementspringrest.services;
+
+import com.capgemini.forestmanagementhibernate.bean.Admin;
+
+public interface AdminServices {
+	public boolean login(int id,String password);
+	
+
+}

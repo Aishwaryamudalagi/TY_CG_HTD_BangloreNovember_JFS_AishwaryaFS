@@ -1,0 +1,38 @@
+package com.capgemini.forestmanagementspringrest.controller;
+
+import java.util.Arrays;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.capgemini.forestmanagementspringrest.dto.Admin;
+import com.capgemini.forestmanagementspringrest.dto.AdminResponse;
+import com.capgemini.forestmanagementspringrest.dto.Client;
+import com.capgemini.forestmanagementspringrest.dto.ClientResponse;
+import com.capgemini.forestmanagementspringrest.services.ClientServices;
+@RestController
+public class ClientController {
+	@Autowired
+	private ClientServices service;
+	
+	@PostMapping(path = "/clientlogin", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ClientResponse login(@RequestBody Admin bean) {
+		ClientResponse response = new ClientResponse();
+		Client client = service.login(bean);
+		if (client != null) {
+			response.setStatusCode(201);
+			response.setDescription("Success");
+			response.setMessage("Logged in");
+			response.setAdmin(Arrays.asList(admin));
+		} else {
+			response.setStatusCode(405);
+			response.setDescription("Failure");
+			response.setMessage("Provide valid credentials");
+		}
+		return response;
+	}
+
+}

@@ -1,0 +1,150 @@
+package com.capgemini.forestmanagementsystem.controller;
+
+import java.util.List;
+import java.util.Scanner;
+
+import com.capgemini.forestmanagementsystem.factory.HaulierFactory;
+import com.capgemini.forestmanagementsystem.factory.LandFactory;
+
+import com.capgemini.forestrymanagementsystem.bean.LandBean;
+import com.capgemini.forestrymanagementsystem.dao.LandDAO;
+import com.capgemini.forestrymanagementsystem.services.HaulierServices;
+import com.capgemini.forestrymanagementsystem.services.LandServices;
+import com.capgemini.forestrymanagementsystem.validations.validations;
+
+
+public class LandMain {
+	public static void main() {
+		LandServices service=LandFactory.instanceOfLandServices();
+		Scanner scanner = new Scanner(System.in);
+		
+		while(true)
+		{
+		System.out.println("Press 1 to insert Land data...");
+		System.out.println("Press 2 to delete Land data...");
+		System.out.println("press 3 to search Land data...");
+		System.out.println("Press 4 to get Land data...");
+		System.out.println("Press 5 to modify the data...");
+		System.out.println("Press 6 to home");
+		
+		
+		try
+		{
+		int choice=scanner.nextInt();
+		switch(choice)
+		{
+		case 1 :LandBean bean= new LandBean(); 
+		boolean idmatcher=true;
+		while(idmatcher==true) {
+			System.out.println("Enter Land Id");
+			String id=scanner.next();
+			if(validations.isNumber(id)) {
+				int landId=Integer.parseInt(id);
+				idmatcher=false;
+				bean.setLandId(landId);
+			} else {
+				System.err.println("Id should contain numbers only");
+			}
+		}
+		boolean matcher=true;
+		while(matcher==true) {
+			System.out.println("Enter Owner Name,1st character should be capital");
+			String name=scanner.next();
+			if(validations.StringOnlyAlphabet(name)) {
+				matcher=false;
+				bean.setOwnerName(name);
+			}
+			else {
+				System.err.println("Enter the name is correct format");
+			}
+		}
+		
+		boolean costmatcher=true;
+		while(costmatcher==true) {
+			System.out.println("Enter Land cost");
+			String cost=scanner.next();
+			if(validations.isNumber(cost)) {
+				int landCost=Integer.parseInt(cost);
+				costmatcher=false;
+				bean.setCost(landCost);
+			} else {
+				System.err.println("mention the cost in proper format");
+			}
+		}                                           //
+			
+		boolean check= service.addLand(bean);
+		if(check)
+		{
+			System.out.println("Land Registered!!");
+		}
+		else
+		{
+			System.err.println("Land couldnt be registered");
+		}
+		break;
+		case 2 :System.out.println("Enter the Land id to delete");
+		int landId1=sc.nextInt();
+		boolean check1=service.deleteLand(landId1);
+		if(check1)
+		{
+			System.out.println("Land deleted...");
+		}
+		else
+		{
+			System.err.println("Land couldnt be deleted...");
+		}
+
+	break;
+		case 3 :
+			System.out.println("Enter id to search...");
+			int landId2 = sc.nextInt();
+			LandBean landbean = service.getLand(landId2);
+			if(landbean!=null)
+			{
+				
+				System.out.println(landbean.getLandId());
+				System.out.println(landbean.getOwnerName());
+				System.out.println(landbean.getCost());
+			}
+			else
+			{
+				System.err.println("Land not found....");
+			}
+		break;
+		case 4 :
+			List<LandBean> check11=service.getLands();
+			if(check11!=null)
+			{
+				System.out.println("Land details are...");
+				System.out.println(check11);
+			}
+			else
+			{
+				System.err.println("Land details couldnt be displayed...");
+			}
+			break;
+		case 5 :
+			System.out.println("Enter the Land Id to modify");
+			int landId=sc.nextInt();
+			boolean check111=service.modify(landId);
+			if(check111) 
+			{
+				System.out.println("Land modidfied...");
+			}
+			else
+			{
+				System.err.println("Land couldnt be modified...");
+			}
+			
+		case 6 :Home.main();
+		break;
+		}
+		}
+		catch(Exception e)
+		{
+			System.out.println("Invlid choice");
+		}
+		}
+}
+	
+}

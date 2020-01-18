@@ -1,0 +1,49 @@
+package com.capgemini.forestrymanagementsystem.services;
+
+import java.util.List;
+
+import com.capgemini.forestmanagementsystem.factory.ClientFactory;
+import com.capgemini.forestrymanagementsystem.bean.ClientBean;
+import com.capgemini.forestrymanagementsystem.dao.ClientDAO;
+
+
+public class ClientServicesImpl implements ClientServices{
+	ClientDAO dao=ClientFactory.instanceOfClientDAOImpl();
+
+	@Override
+	public boolean addClient(ClientBean bean) {
+		
+		return dao.addClient(bean);
+	}
+
+	@Override
+	public boolean deleteClient(String clientEmail) {
+		
+		return dao.deleteClient(clientEmail);
+	}
+
+	@Override
+	public ClientBean getClient(String clientEmail) {
+		
+		return dao.getClient(clientEmail);
+	}
+
+	@Override
+	public List<ClientBean> getClients() {
+		
+		return dao.getClients();
+	}
+
+	@Override
+	public boolean modify(String clientEmail,ClientBean client) {
+		
+		return dao.modify(clientEmail);
+	}
+
+	@Override
+	public boolean Clientlogin(String email, String password) {
+		
+		return dao.Clientlogin(email, password);
+	}
+
+}

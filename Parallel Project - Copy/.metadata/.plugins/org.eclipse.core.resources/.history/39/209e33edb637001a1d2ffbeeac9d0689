@@ -1,0 +1,88 @@
+package com.capgemini.forestrymanagementsystem.dao;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+
+import com.capgemini.forestrymanagementsystem.bean.LandBean;
+
+public class LandDAOImpl implements LandDAO{
+	Scanner sc = new Scanner(System.in);
+	private List<LandBean> landbeans=new ArrayList<LandBean>();
+
+	@Override
+	public boolean addLand(LandBean bean) {
+		for(LandBean landbean : landbeans)
+		{
+			if(landbean.getLandId()==bean.getLandId())
+			{
+				return false;
+			}
+		}
+		landbeans.add(bean);
+		{
+			return true;
+		}
+	}
+
+	@Override
+	public boolean deleteLand(int id) {
+		for(LandBean landbean : landbeans)
+		{
+			LandBean bean = null;
+			if(landbean.getLandId()==id)
+			{
+				bean=landbean;
+			}
+		
+		if(bean!=null)
+		{
+			landbeans.remove(bean);
+			return true;
+		}
+	}
+		return false;
+	}
+
+	@Override
+	public LandBean getLand(int id) {
+		for(LandBean landbean : landbeans)
+		{
+			
+			if(landbean.getLandId()==id)
+			{
+				return landbean;
+			}
+		}
+
+		return null;
+	}
+
+	@Override
+	public List<LandBean> getLands() {
+		
+		return landbeans;
+	}
+
+	@Override
+	public boolean modify(int id,LandBean land) {
+		for(LandBean landBean:landbeans)
+		{
+			if(landBean.getLandId()==id)
+			{
+				landBean.setLandId(id);
+				landBean.setOwnerName(land.getOwnerName());
+				landBean.setCost(land.getCost());
+				
+				
+				
+				return true;
+			}
+		}
+
+		
+		return false;
+	}
+
+}

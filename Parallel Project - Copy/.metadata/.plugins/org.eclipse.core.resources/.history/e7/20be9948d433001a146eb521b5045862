@@ -1,0 +1,5 @@
+package com.capgemini.forestmanagementspringrest.controller;
+
+public class ProductControllerAdvice {
+
+}

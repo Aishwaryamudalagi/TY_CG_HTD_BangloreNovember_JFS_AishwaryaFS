@@ -1,0 +1,234 @@
+package com.capgemini.forestmanagementhibernate.controller;
+
+import java.util.List;
+import java.util.Scanner;
+
+import com.capgemini.forestmanagementhibernate.bean.Contract;
+import com.capgemini.forestmanagementhibernate.bean.Customer;
+import com.capgemini.forestmanagementhibernate.factory.ContractFactory;
+import com.capgemini.forestmanagementhibernate.services.ContractServices;
+
+public class ContractMain {
+	public static void main(String args[]) {
+		ContractServices service=ContractFactory.instanceOfContractServices();
+		Contract bean=new Contract();
+		Scanner sc = new Scanner(System.in);
+		while(true)
+		{
+			System.out.println("Press 1 to insert Contract...");
+			System.out.println("Press 2 to delete Contract...");
+			System.out.println("press 3 to update Contract...");
+			System.out.println("Press 4 to get all Contracts...");
+			System.out.println("Press 5 to home...");
+			int choice=sc.nextInt();
+			switch(choice)
+			{
+			case 1 : boolean var=false;
+			String expression1="^[1-9][0-9]*";
+			boolean flag=false;
+			while(!flag){
+				try {
+				
+				System.out.println("Enter contract number");
+				int contractno=sc.nextInt();
+				flag=true;
+				String num=Integer.toString(contractno);
+				var=num.matches(expression1);
+				if(!var)
+				{
+					sc.next();
+					System.out.println("Invalid contract number!");
+					
+				
+				}
+				else
+				{
+					bean.setContractno(contractno);
+				}
+				}catch(Exception e)
+				{
+					sc.next();
+					System.out.println("Type of input is wrong!!\nPlease enter the valid input type");
+				}
+					
+				}			
+				String expression2="^[1-9][0-9]*";
+				boolean flag1=false;
+				
+				while(!flag1){
+					try {
+					
+					System.out.println("Enter customer Id");
+					int customerid=sc.nextInt();
+					flag1=true;
+					String num=Integer.toString(customerid);
+					var=num.matches(expression2);
+					if(!var)
+					{
+						
+						System.out.println("Invalid customer Id!");
+						
+					
+					}
+					else
+					{
+						bean.setCustomerid(customerid);
+					}
+					}catch(Exception e)
+					{
+						sc.next();
+						System.out.println("Type of input is wrong!!\nPlease enter the valid input type");
+					}
+						
+					}
+				String expression3="^[1-9][0-9]*";
+				boolean flag2=false;
+				while(!flag2){
+					try {
+					
+					System.out.println("Enter product Id");
+					int productid=sc.nextInt();
+					flag2=true;
+					String num=Integer.toString(productid);
+					var=num.matches(expression3);
+					if(!var)
+					{
+						
+						System.out.println("Invalid Product Id");
+						
+					
+					}
+					else
+					{
+						bean.setProductid(productid);
+					}
+					}catch(Exception e)
+					{
+						sc.next();
+						System.out.println("Type of input is wrong!!\nPlease enter the valid input type");
+					}
+				}
+					String expression4="^[1-9][0-9]*";
+					boolean flag3=false;
+					while(!flag3){
+						try {
+						
+						System.out.println("Enter Haulier Id");
+						int haulierid=sc.nextInt();
+						flag3=true;
+						String num=Integer.toString(haulierid);
+						var=num.matches(expression4);
+						if(!var)
+						{
+							sc.next();
+							System.out.println("Invalid Haulier Id!");
+							
+						
+						}
+						else
+						{
+							bean.setHaulierid(haulierid);
+						}
+						}catch(Exception e)
+						{
+							sc.next();
+							System.out.println("Type of input is wrong!!\\nPlease enter the valid input type");
+						}
+					}
+			System.out.println("Enter Delivery date");
+			String date = sc.next();
+			System.out.println("Enter Delivery day");
+			String day = sc.next();
+			System.out.println("Enter Quantity");
+			int qty = sc.nextInt();
+			
+			bean.setDeliverydate(date);
+			bean.setDeliveryday(day);
+			bean.setQuantity(qty);
+
+			boolean check= service.addContract(bean);
+			if(check)
+			{
+				System.out.println("Contract added to list");
+			}
+			else
+			{
+				System.out.println("Contract couldnt be added");
+			}
+			break;
+					
+				
+			case 2 :System.out.println("Enter the contract no. to delete");
+			int csno=sc.nextInt();
+			boolean check1=service.deleteContract(csno);
+			if(check1)
+			{
+				System.out.println("Contract deleted...");
+			}
+			else
+			{
+				System.out.println("Contract wasnt deleted...");
+			}
+
+			break;
+			case 3 :System.out.println("Enter the contractno");
+			int id=sc.nextInt();
+			Contract contract=new Contract();
+			System.out.println("Enter the Customer Id to be modified...");
+			contract.setCustomerid(sc.nextInt());
+			System.out.println("Enter the Product Id to be modidfied...");
+			contract.setProductid(sc.nextInt());
+			System.out.println("Enter the Haulier Id to be modidfied...");
+			contract.setHaulierid(sc.nextInt());
+			System.out.println("Enter the Delivery date to be modidfied...");
+			contract.setDeliverydate(sc.next());
+			System.out.println("Enter the Delivery day to be modidfied...");
+			contract.setDeliveryday(sc.next());
+			System.out.println("Enter the Quantity to be modidfied...");
+			contract.setQuantity(sc.nextInt());
+			
+			boolean check11=service.updateContract(id,contract);
+			if(check11)
+			{
+				System.out.println("Contract modified...");
+			}
+			else
+			{
+				System.out.println("Something went wrong...");
+			}
+
+			break;
+				/*
+				 * case 4: List<Contract> l1=service.getContract(); if(l1!=null) { for(Contract
+				 * bean1:l1) { System.out.println(bean1); } }
+				 * break;
+				 */
+			case 4:System.out.println("Enter contract number to search...");
+			int contractno = sc.nextInt();
+			Contract contract1 = service.getContract(contractno);
+			if(contract1!=null)
+			{
+				System.out.println(contract1.getContractno());
+				System.out.println(contract1.getCustomerid());
+				
+				System.out.println(contract1.getProductid());
+				System.out.println(contract1.getHaulierid());
+				System.out.println(contract1.getDeliverydate());
+				System.out.println(contract1.getDeliveryday());
+				System.out.println(contract1.getQuantity());
+				
+			}
+			else
+			{
+				System.err.println("Contract not found....");
+			}
+			break;
+			case 5: Home.main();
+			break;
+
+			}
+
+	}
+	}
+
+}

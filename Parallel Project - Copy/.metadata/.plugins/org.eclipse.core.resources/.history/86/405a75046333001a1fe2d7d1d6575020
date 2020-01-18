@@ -1,0 +1,48 @@
+package com.capgemini.forestmanagementhibernate.controller;
+
+import java.util.Scanner;
+
+import com.capgemini.forestmanagementhibernate.bean.Admin;
+import com.capgemini.forestmanagementhibernate.factory.AdminFactory;
+import com.capgemini.forestmanagementhibernate.services.AdminServices;
+public class AdminMain {
+	public static void main() {
+		Scanner scanner= new Scanner(System.in);
+		AdminServices services= AdminFactory.instanceOfAdminServices();
+		while(true)
+		{
+			System.out.println("1.Admin Login");
+			System.out.println("2.Main");
+		int choice=scanner.nextInt();
+		switch(choice)
+		{
+		
+		case 1:System.out.println("Enter Id");
+		int id=scanner.nextInt();
+		System.out.println(("Enter email"));
+		String email=scanner.next();
+		System.out.println("Enter Password");
+		String pswd=scanner.next();
+		System.out.println("Enter role");
+		String role=scanner.next();
+		Admin admin=new Admin();
+		admin.setAdminId(id);
+		admin.setPassword(pswd);
+		boolean adminLogin=services.login(id, pswd);
+		if(adminLogin!=false)
+		{
+			System.out.println("Admin logged in!!");
+			Home.main();
+		}
+		else
+		{
+			System.out.println("Admin couldnt be logged in!!");
+		}
+		
+		case 2:Main.main();
+		}
+
+	}
+	}
+
+}

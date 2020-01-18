@@ -1,0 +1,91 @@
+package com.capgemini.forestrymanagementsystem.dao;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+import com.capgemini.forestmanagementsystem.controller.Home;
+import com.capgemini.forestrymanagementsystem.bean.CustomerBean;
+
+public class ForestDAOImpl implements ForestDAO {
+	Scanner sc = new Scanner(System.in);
+private List<CustomerBean> forestbeans=new ArrayList<CustomerBean>();
+	@Override
+	public boolean addCustomer(CustomerBean bean) {
+		for(CustomerBean forestbean : forestbeans)
+		{
+			if(forestbean.getCustomerid()==bean.getCustomerid())
+			{
+				return false;
+			}
+		}
+		forestbeans.add(bean);
+		{
+			return true;
+		}
+		
+	}
+
+	@Override
+	public boolean deleteCustomer(int customerid) {
+		for(CustomerBean forestbean : forestbeans)
+		{
+			CustomerBean bean = null;
+			if(forestbean.getCustomerid()==customerid)
+			{
+				bean=forestbean;
+			}
+		
+		if(bean!=null)
+		{
+			forestbeans.remove(bean);
+			return true;
+		}
+	}
+		
+		
+		return false;
+		
+	}
+
+	@Override
+	public CustomerBean getCustomer(int customerid) {
+		for(CustomerBean forestbean : forestbeans)
+		{
+			
+			if(forestbean.getCustomerid()==customerid)
+			{
+				return forestbean;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public List<CustomerBean> getCustomers() {
+		
+		return forestbeans;
+	}
+
+	@Override
+	public boolean modify(int customerId,CustomerBean bean) {
+		for(CustomerBean forestBean:forestbeans)
+		{
+			if(forestBean.getCustomerid()==customerId)
+			{
+				forestBean.setCustomerid(customerId);
+				forestBean.setCustomerName(bean.getCustomerName());
+				forestBean.setStreetAddress(bean.getStreetAddress());
+				forestBean.setStreetAddress2(bean.getStreetAddress2());
+				forestBean.setTown(bean.getTown());
+				forestBean.setPostalCode(bean.getPostalCode());
+				forestBean.setEmail(bean.getEmail());
+				forestBean.setTelePhoneno(bean.getTelePhoneno());
+
+		}
+
+		
+		return false;
+	}
+
+}

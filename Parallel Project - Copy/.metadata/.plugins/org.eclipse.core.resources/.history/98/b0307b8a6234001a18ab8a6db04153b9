@@ -1,0 +1,112 @@
+package com.capgemini.forestmanagementjdbc.controller;
+
+import java.util.List;
+import java.util.Scanner;
+
+import com.capgemini.forestmanagementjdbc.bean.Client;
+import com.capgemini.forestmanagementjdbc.exception.DuplicateEntryException;
+import com.capgemini.forestmanagementjdbc.factory.ClientFactory;
+import com.capgemini.forestmanagementjdbc.services.ClientServices;
+public class ClientMain {
+	public static void main() {
+	ClientServices service=ClientFactory.instanceOfClientServices();
+	Client bean=new Client();
+	Scanner sc = new Scanner(System.in);
+	while(true)
+	{
+		System.out.println("Press 1 to insert client data...");
+		System.out.println("Press 2 to delete client data...");
+		System.out.println("press 3 to update client data...");
+		System.out.println("Press 4 to get list of all the client...");
+		System.out.println("Press 5 to home...");
+		int choice=sc.nextInt();
+		switch(choice)
+		{
+		case 1 :boolean var;
+			do {
+			String exp7="^(.+)@(.+)$";
+			System.out.println("Enter email");
+			String mail = sc.next();
+			var=mail.matches(exp7);
+			if(!var)
+				System.out.println("Invalid Email");
+			else
+			{
+				bean.setEmail(mail);
+			}
+		}while(!var);
+			do {
+				String passwordexp="((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
+				System.out.println("Enter password\nPassword should contain 1 capital letter,1 lower case and one special character");
+				String pswd = sc.next();
+				var=pswd.matches(passwordexp);
+				if(!var)
+					System.out.println("Invalid Password!");
+				else
+				{
+					bean.setPassword(pswd);
+				}
+			}while(!var);
+		
+		
+			boolean check=false;
+			try {
+				check= service.addClient(bean);
+			}catch(DuplicateEntryException e)
+			{
+				System.err.println(e.toString());
+			}
+				if(check)
+				{
+					System.out.println("Customer added to list");
+				}
+				
+				
+			break;
+		case 2 :System.out.println("Enter the Email to delete");
+		String email1=sc.next();
+		boolean check1=service.deleteClient(email1);
+		if(check1)
+		{
+			System.out.println("Client deleted...");
+		}
+		else
+		{
+			System.out.println("Client couldnt be delted...");
+		}
+
+		break;
+		case 3 :System.out.println("Enter the Email");
+		String mail=sc.next();
+		Client client=new Client();
+		System.out.println("Enter the Password to be modidfied...");
+		client.setPassword(sc.next());
+		boolean check11=service.updateClient(mail,client);
+		if(check11)
+		{
+			System.out.println("Client modified...");
+		}
+		else
+		{
+			System.out.println("Client couldnt be modified...");
+		}
+
+		break;
+		case 4: List<Client> l1=service.getClients();
+		if(l1!=null)
+		{
+			for(Client bean1:l1) {
+				System.out.println(bean1);
+			}
+		}
+		break;
+		case 5:Home.main();
+		break;
+
+		
+		
+		}
+	}
+}
+
+}

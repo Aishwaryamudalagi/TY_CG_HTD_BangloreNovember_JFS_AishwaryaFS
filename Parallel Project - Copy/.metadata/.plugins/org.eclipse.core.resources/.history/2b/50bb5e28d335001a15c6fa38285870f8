@@ -1,0 +1,15 @@
+package com.capgemini.forestmanagementspringrest.services;
+
+import java.util.List;
+
+import com.capgemini.forestmanagementspringrest.dto.Land;
+public interface LandServices {
+	
+	public boolean addLand(Land bean);
+	public boolean deleteLand(int landId);
+	public Land getLand(int landid);
+	public List<Land> getLands();
+	public boolean updateLand(int landID,Land bean);
+
+
+}

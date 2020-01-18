@@ -1,0 +1,13 @@
+package com.capgemini.forestmanagementspringrest.services;
+
+import java.util.List;
+
+import com.capgemini.forestmanagementspringrest.dto.Product;
+public interface ProductServices {
+	public boolean addProduct(Product bean);
+	public boolean deleteProduct(int productId);
+	public boolean updateProduct(int productId,Product product);
+	public List<Product> getProducts();
+	public Product getProduct(int productid);
+
+}

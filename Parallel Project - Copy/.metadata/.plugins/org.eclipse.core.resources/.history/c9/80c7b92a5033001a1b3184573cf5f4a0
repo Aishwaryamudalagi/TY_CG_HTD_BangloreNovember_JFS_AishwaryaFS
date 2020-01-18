@@ -1,0 +1,40 @@
+package com.capgemini.forestmanagementspringrest.services;
+
+import java.util.List;
+
+import com.capgemini.forestmanagementspringrest.dto.Customer;
+
+public class CustomerServicesImpl implements CustomerServices{
+	
+
+	@Override
+	public boolean addCustomer(Customer bean) {
+		
+		return dao.addCustomer(bean);
+	}
+
+	@Override
+	public boolean deleteCustomer(int customerId) {
+		
+		return dao.deleteCustomer(customerId);
+	}
+
+	@Override
+	public boolean updateCustomer(int customerId,Customer bean) {
+		
+		return dao.updateCustomer(customerId,bean);
+	}
+
+	@Override
+	public Customer getCustomer(int customerid) {
+		return dao.getCustomer(customerid);
+		
+	}
+
+	@Override
+	public List<Customer> getCustomers() {
+		
+		return dao.getCustomers();
+	}
+
+}

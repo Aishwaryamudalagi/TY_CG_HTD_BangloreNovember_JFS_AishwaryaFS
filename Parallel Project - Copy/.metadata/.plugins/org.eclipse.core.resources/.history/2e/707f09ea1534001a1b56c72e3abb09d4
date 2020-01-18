@@ -1,0 +1,6 @@
+ackage com.capgemini.forestrymanagementsystem.dao;
+
+public interface ClientLoginDAO {
+	//public boolean Clientlogin(String email,String password) ;
+
+}

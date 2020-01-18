@@ -1,0 +1,137 @@
+package com.capgemini.hibernate.dao;
+
+import java.io.FileReader;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
+
+import com.capgemini.hibernate.bean.Haulier;
+
+public class HaulierDAOImpl implements HaulierDAO{
+	FileReader reader;
+	Properties prop;
+	Haulier haulier;
+	public HaulierDAOImpl()
+	{
+		try {
+			
+			reader = new FileReader("db.properties");
+			prop= new Properties();
+			prop.load(reader);
+			Class.forName(prop.getProperty("driverClass"));
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public boolean addHaulier(Haulier bean) {
+		try(Connection conn = DriverManager.getConnection(prop.getProperty("dbUrl"),
+				prop.getProperty("dbUser"),prop.getProperty("dbPassword"));
+				PreparedStatement pstmt = conn.prepareStatement(prop.getProperty("insertQuery4")))
+		{
+				
+				pstmt.setInt(1, bean.getHaulierId());
+				pstmt.setString(2, bean.getHaulierName());
+				pstmt.setString(3, bean.getEmail());
+				pstmt.setLong(4, bean.getTelephoneNumber());
+				
+				
+				int count = pstmt.executeUpdate();
+				
+				if(count>0) {
+					return true;
+				}
+			
+	   }catch(Exception e) {
+			e.printStackTrace();
+			
+		}
+		
+		return false;
+	}
+
+	@Override
+	public boolean deleteHaulier(int haulierId) {
+		try(Connection conn = DriverManager.getConnection(prop.getProperty("dbUrl"),
+				prop.getProperty("dbUser"),prop.getProperty("dbPassword"));
+				PreparedStatement pstmt = conn.prepareStatement(prop.getProperty("deleteQuery4")))
+		{
+				
+				pstmt.setInt(1, haulierId);
+				
+				 
+				int count = pstmt.executeUpdate();
+		
+				
+				if(count>0) {
+					return true;
+				}
+			
+	   }catch(Exception e) {
+			e.printStackTrace();
+			 
+		}
+		return false;
+	}
+
+	@Override
+	public boolean updateHaulier(int haulierId, Haulier bean) {
+		try(Connection conn = DriverManager.getConnection(prop.getProperty("dbUrl"),
+				prop.getProperty("dbUser"),prop.getProperty("dbPassword"));
+				PreparedStatement pstmt = conn.prepareStatement(prop.getProperty("updateQuery4")))
+		{
+				
+				pstmt.setInt(4, haulierId);
+				
+				pstmt.setString(1, bean.getHaulierName());
+				pstmt.setString(2, bean.getEmail());
+				pstmt.setLong(3, bean.getTelephoneNumber());
+				
+				int count = pstmt.executeUpdate();
+				
+				if(count>0) {
+					return true;
+				}
+			
+	   }catch(Exception e) {
+			e.printStackTrace();
+			
+		}
+		return false;
+	}
+
+	@Override
+	public List<Haulier> getHaulier() {
+		List<Haulier> list = new ArrayList<Haulier>();
+		try(Connection conn = DriverManager.getConnection(prop.getProperty("dbUrl"),
+				prop.getProperty("dbUser"),prop.getProperty("dbPassword"));
+				Statement stmt=conn.createStatement();
+				ResultSet rs= stmt.executeQuery(prop.getProperty("ListAll4"))){
+			while(rs.next()) {
+				haulier=new Haulier();
+				haulier.setHaulierId(rs.getInt(1));
+				haulier.setHaulierName(rs.getString(2));
+				haulier.setEmail(rs.getString(3));
+				haulier.setTelephoneNumber(rs.getLong(4));
+				
+				list.add(haulier);
+			}
+			return list;
+		
+		
+			
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+}

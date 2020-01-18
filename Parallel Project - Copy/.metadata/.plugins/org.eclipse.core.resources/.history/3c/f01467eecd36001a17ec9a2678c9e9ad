@@ -1,0 +1,52 @@
+package com.capgemini.forestmanagementspringrest.services;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.capgemini.forestmanagementspringrest.dao.ClientDAO;
+import com.capgemini.forestmanagementspringrest.dto.Client;
+
+@Service
+public class ClientServicesImpl implements ClientServices{
+	
+	@Autowired
+	private ClientDAO dao;
+	@Override
+	public boolean addClient(Client bean) {
+		
+		return dao.addClient(bean);
+	}
+
+	@Override
+	public boolean deleteClient(String email) {
+		
+		return dao.deleteClient(email);
+	}
+
+	@Override
+	public List<Client> getClients() {
+		
+		return dao.getClients();
+	}
+
+	@Override
+	public boolean updateClient(String email, Client client) {
+		
+		return dao.updateClient(email, client);
+	}
+
+	@Override
+	public boolean login(String email, String password) {
+		
+		return dao.login(email, password);
+	}
+
+	@Override
+	public Client getClient(String email) {
+		
+		return dao.getClient(email);
+	}
+
+}

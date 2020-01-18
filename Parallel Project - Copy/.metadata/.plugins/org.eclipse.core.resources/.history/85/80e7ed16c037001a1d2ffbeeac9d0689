@@ -1,0 +1,35 @@
+driverClass=com.mysql.jdbc.Driver
+dburl=jdbc:mysql://localhost:3306/forestrymanagementsystem
+dbUser=root
+dbPassword=root
+insertQuery = insert into customer values(?,?,?,?,?,?,?,?)
+deleteQuery = delete from customer where customerId=?
+updateQuery = update customer set customername=?,streetaddress1=?,streetaddress2=?,town=?,postalcode=?,email=?,telephone=? where customerid=?
+insertQuery1 = insert into product values(?,?,?) 
+ListAll = select * from customer
+insertQuery2 = insert into product values(?,?,?)
+deleteQuery2 = delete from product where productId=?
+updateQuery2 = update product set productName=?,deliveryDate=? where productId=?
+insertQuery3 = insert into contract values(?,?,?,?,?,?,?)
+deleteQuery3 = delete from contract where contractNo=?
+updateQuery3 = update contract set customerid=?,productid=?,haulierid=?,deliverydate=?,deliveryday=?,quantity=? where contractno=?
+ListAll3=select * from contract;
+insertQuery4 = insert into Haulier values(?,?,?,?)
+deleteQuery4 = delete from haulier where haulierid=?
+updateQuery4 = update haulier set haulierName=?,email=?,telephone=? where haulierId=?
+ListAll4=select * from haulier;
+ListAll2=select * from product;
+
+insertQuery5=insert into Land values(?,?)
+deleteQuery5 = delete from Land where landid=?
+ListAll5=select * from Land;
+updateQuery5 = update land set owner=? where landId=?
+insertQuery6=insert into login values(?,?,?,?)
+deleteQuery6 = delete from login where email=?
+updateQuery6 = update login set password=? where email=?
+ListAll6=select * from login
+
+Login=select * from login where id=? and password=?
+Clientlogin=select * from login where email=? and password=?
+
+

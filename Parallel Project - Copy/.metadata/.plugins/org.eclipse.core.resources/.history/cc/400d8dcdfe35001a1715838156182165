@@ -1,0 +1,36 @@
+package com.capgemini.forestmanagementspringrest.dto;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="land")
+public class Land {
+	@Id
+	@Column
+	private int LandId;
+	@Column
+	private String owner;
+	
+	@Override
+	public String toString() {
+		return "Land [LandId=" + LandId + ", Owner=" + owner +  "]";
+	}
+	public int getLandId() {
+		return LandId;
+	}
+	public void setLandId(int landId) {
+		LandId = landId;
+	}
+	public String getOwner() {
+		return owner;
+	}
+	public void setOwner(String owner) {
+		owner = owner;
+	}
+	
+	
+
+}

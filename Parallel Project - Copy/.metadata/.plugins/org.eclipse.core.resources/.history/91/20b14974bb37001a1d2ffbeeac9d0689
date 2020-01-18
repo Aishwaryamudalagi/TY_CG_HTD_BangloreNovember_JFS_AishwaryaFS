@@ -1,0 +1,86 @@
+package com.capgemini.forestrymanagementsystem.dao;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+import com.capgemini.forestrymanagementsystem.bean.CustomerBean;
+//import com.capgemini.forestrymanagementsystem.bean.ForestBean;
+import com.capgemini.forestrymanagementsystem.bean.ProductBean;
+
+public class ProductDAOImpl implements ProductDAO {
+	Scanner sc = new Scanner(System.in);
+	private List<ProductBean> productbeans=new ArrayList<ProductBean>();
+
+	@Override
+	public boolean addProduct(ProductBean bean) {
+		for(ProductBean productbean : productbeans)
+		{
+			if(productbean.getProductid()==bean.getProductid())
+			{
+				return false;
+			}
+		}
+		productbeans.add(bean);
+		{
+			return true;
+		}
+		
+	}
+
+	@Override
+	public boolean deleteProduct(int productid) {
+		for(ProductBean productbean : productbeans)
+		{
+			ProductBean bean = null;
+			if(productbean.getProductid()==productid)
+			{
+				bean=productbean;
+			}
+		
+		if(bean!=null)
+		{
+			productbeans.remove(bean);
+			return true;
+		}
+	}
+		
+		return false;
+	}
+
+	@Override
+	public boolean modify(int productid,ProductBean product) {
+		for(ProductBean productBean:productbeans)
+		{
+			if(productBean.getProductid()==productid)
+			{
+				productBean.setProductid(productid);
+				productBean.setProductname(product.getProductname());
+				productBean.setDeliverydate(product.getDeliverydate());
+				return true;
+			}
+			
+		}	
+		return false;	
+	}
+
+	@Override
+	public List<ProductBean> getProducts() {
+	
+		return productbeans;
+	}
+
+	@Override
+	public ProductBean getProduct(int productid) {
+		for(ProductBean forestbean : productbeans)
+		{
+			
+			if(forestbean.getProductid()==productid)
+			{
+				return forestbean;
+			}
+		}
+		return null;
+	}
+
+}

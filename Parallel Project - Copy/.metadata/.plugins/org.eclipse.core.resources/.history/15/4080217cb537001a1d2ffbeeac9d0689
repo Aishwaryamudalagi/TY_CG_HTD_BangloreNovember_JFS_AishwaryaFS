@@ -1,0 +1,86 @@
+package com.capgemini.forestrymanagementsystem.dao;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+import com.capgemini.forestrymanagementsystem.bean.CustomerBean;
+import com.capgemini.forestrymanagementsystem.bean.HaulierBean;
+
+public class HaulierDAOImpl implements HaulierDAO{
+	Scanner sc = new Scanner(System.in);
+	private List<HaulierBean> haulierbeans=new ArrayList<HaulierBean>();
+
+	@Override
+	public boolean addHaulier(HaulierBean bean) {
+		for(HaulierBean haulierbean : haulierbeans)
+		{
+			if(haulierbean.getHaulierId()==bean.getHaulierId())
+			{
+				return false;
+			}
+		}
+		haulierbeans.add(bean);
+		{
+			return true;
+		}
+	
+	}
+
+	@Override
+	public boolean deleteHaulier(int haulierId) {
+		for(HaulierBean haulierbean : haulierbeans)
+		{
+			HaulierBean bean = null;
+			if(haulierbean.getHaulierId()==haulierId)
+			{
+				bean=haulierbean;
+			}
+		
+		if(bean!=null)
+		{
+			haulierbeans.remove(bean);
+			return true;
+		}
+		}
+		return false;
+	}
+
+	@Override
+	public HaulierBean getHaulier(int haulierId) {
+		for(HaulierBean haulierbean : haulierbeans)
+		{
+			
+			if(haulierbean.getHaulierId()==haulierId)
+			{
+				return haulierbean;
+			}
+		}
+		return null;	
+	}
+
+	@Override
+	public List<HaulierBean> getHauliers() {
+		
+		return haulierbeans;
+	}
+
+	@Override
+	public boolean modify(int haulierId,HaulierBean haulier) {
+		for(HaulierBean haulierBean:haulierbeans)
+		{
+			if(haulierBean.getHaulierId()==haulierId)
+			{
+				haulierBean.setHaulierId(haulierId);
+				
+				return true;
+				}
+				
+			}
+		}
+
+		
+		return false;
+	}
+
+}

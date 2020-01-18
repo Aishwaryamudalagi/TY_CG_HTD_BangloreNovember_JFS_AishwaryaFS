@@ -1,0 +1,113 @@
+package com.capgemini.forestmanagementspringrest.dao;
+
+import java.io.FileReader;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+import javax.persistence.PersistenceUnit;
+import javax.persistence.Query;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.capgemini.forestmanagementspringrest.dto.Land;
+import com.capgemini.forestmanagementspringrest.exceptions.DuplicateEntryException;
+
+@Repository
+public class LandDAOImpl implements LandDAO {
+
+	@PersistenceUnit
+	EntityManagerFactory entityManagerFactory;
+
+	@Override
+	public boolean addLand(Land bean) {
+		EntityManager entitymanager = null;
+		EntityTransaction transaction = null;
+		try {
+			entitymanager = entityManagerFactory.createEntityManager();
+			transaction = entitymanager.getTransaction();
+			transaction.begin();
+			entitymanager.persist(bean);
+			transaction.commit();
+			entitymanager.close();
+			return true;
+		} catch (Exception e) {
+			throw new DuplicateEntryException("Id is repeated");
+		}	
+	}
+
+	@Override
+	public boolean deleteLand(int landId) {
+		try {
+			EntityManager entityManager = entityManagerFactory.createEntityManager();
+			EntityTransaction transaction = entityManager.getTransaction();
+			transaction.begin();
+			Land land = entityManager.find(Land.class, landId);
+			entityManager.remove(land);
+			entityManager.getTransaction().commit();
+			entityManager.close();
+			return true;
+		} catch (Exception e) {
+			throw new DuplicateEntryException("Id does not exist");					
+		}
+	}
+
+	@Override
+	public boolean updateLand(int landId, String owner) {
+		EntityTransaction transaction = null;
+		EntityManager entityManager=null;
+		try {
+			entityManager = entityManagerFactory.createEntityManager();
+			transaction = entityManager.getTransaction();
+			transaction.begin();
+			Land lands = entityManager.find(Land.class, landId);
+			lands.setOwner(owner);
+			transaction.commit();
+			return true;
+		} catch (Exception e) {
+			transaction.rollback();
+		}
+		entityManager.close();
+		throw new DuplicateEntryException("Id does not exist,Cannot be modidfied");	}
+
+	@Override
+	public Land getLand(int landid) {
+		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Test");
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+		Land getLand = entityManager.find(Land.class, landid);
+		return getLand;
+
+	}
+
+	@Override
+	public List<Land> getLands() {
+		EntityManager entityManager = null;
+		EntityTransaction transaction = null;
+		try {
+			EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Test");
+			entityManager = entityManagerFactory.createEntityManager();
+			transaction = entityManager.getTransaction();
+			transaction.begin();
+			String jpql = "from Land";
+			Query query = entityManager.createQuery(jpql);
+			List<Land> list = query.getResultList();
+			return list;
+		} catch (Exception e) {
+			transaction.rollback();
+		}
+		entityManager.close();
+
+		return null;
+	}
+
+}

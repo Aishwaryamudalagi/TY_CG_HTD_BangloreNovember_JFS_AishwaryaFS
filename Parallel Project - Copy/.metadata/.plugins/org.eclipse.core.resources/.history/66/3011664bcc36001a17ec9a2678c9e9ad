@@ -1,0 +1,156 @@
+package com.capgemini.forestmanagementspringrest.dao;
+
+import java.io.FileReader;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+import javax.persistence.PersistenceUnit;
+import javax.persistence.Query;
+
+import org.springframework.stereotype.Repository;
+
+import com.capgemini.forestmanagementspringrest.dto.Admin;
+import com.capgemini.forestmanagementspringrest.dto.Client;
+@Repository
+public class ClientDAOImpl implements ClientDAO{
+	@PersistenceUnit
+	EntityManagerFactory entityManagerFactory;
+	@Override
+	public boolean addClient(Client bean) {
+		EntityManager entitymanager=null;
+		EntityTransaction transaction=null;
+		boolean flag1=false;
+		try {
+		EntityManagerFactory entityManagerFactory=Persistence.createEntityManagerFactory("Test");
+		entitymanager= entityManagerFactory.createEntityManager();
+		transaction=entitymanager.getTransaction();
+		transaction.begin();
+		entitymanager.persist(bean);
+		System.out.println("Record saved...");
+		transaction.commit();
+		flag1=true;
+		} catch(Exception e)
+		{
+			e.printStackTrace();
+			transaction.rollback();
+		}
+		
+		entitymanager.close();
+		
+		return flag1;
+	}
+
+	@Override
+	public boolean deleteClient(String email) {
+		Boolean flag=false;
+		try
+		{
+			EntityManagerFactory entityManagerFactory=Persistence.createEntityManagerFactory("Test");
+			EntityManager entityManager=entityManagerFactory.createEntityManager();
+			EntityTransaction transaction=entityManager.getTransaction();
+			transaction.begin();
+			Client client=entityManager.find(Client.class, email);
+			entityManager.remove(client);
+			entityManager.getTransaction().commit();
+			entityManager.close();
+			flag=true;
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			
+		}
+		
+		return flag;
+	}
+
+	@Override
+	public List<Client> getClients() {
+		EntityManager entityManager=null;
+		EntityTransaction transaction=null;
+		try
+		{
+			EntityManagerFactory entityManagerFactory=Persistence.createEntityManagerFactory("Test");
+			entityManager=entityManagerFactory.createEntityManager();
+			transaction=entityManager.getTransaction();
+			transaction.begin();
+			String jpql="from client";
+			Query query=entityManager.createQuery(jpql);
+			List<Client> list=query.getResultList();
+			return list;
+		}
+		catch(Exception e)
+		{
+			transaction.rollback();
+		}
+		entityManager.close();
+		
+		
+		return null;
+	}
+
+	@Override
+	public boolean updateClient(String email, Client  client) {
+		EntityTransaction transaction=null;
+		try
+		{
+		EntityManagerFactory entityManagerFactory=Persistence.createEntityManagerFactory("Test");
+		EntityManager entityManager=entityManagerFactory.createEntityManager();
+		transaction=entityManager.getTransaction();
+		transaction.begin();
+		Client clients=entityManager.find(Client.class, email);
+		clients.setPassword(client.getPassword());
+		transaction.commit();
+		return true;
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			transaction.rollback();
+		}
+		
+			return false;
+	}
+
+	@Override
+	public Client login(Client client) {
+		EntityManager entityManager=entityManagerFactory.createEntityManager();
+		//EntityTransaction transaction=entityManager.getTransaction();
+		String jpql="from Client where email=:email";// and password=:password";
+		Query query=entityManager.createQuery(jpql);
+		query.setParameter("email", email);
+		query.setParameter("password", password);
+		try
+		{
+			List<Admin> list=query.getResultList();
+			if(list!=null && list.size()>0) {
+				return true;
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		entityManager.close();
+		return false;
+	}
+
+	@Override
+	public Client getClient(String email) {
+		EntityManagerFactory entityManagerFactory=Persistence.createEntityManagerFactory("Test");
+		EntityManager entityManager=entityManagerFactory.createEntityManager();
+		Client getClient=entityManager.find(Client.class, email);
+		return getClient;
+	}
+
+}

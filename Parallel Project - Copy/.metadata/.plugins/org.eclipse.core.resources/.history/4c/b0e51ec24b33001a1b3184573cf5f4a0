@@ -1,0 +1,15 @@
+package com.capgemini.forestmanagementspringrest.services;
+
+import java.util.List;
+
+import com.capgemini.forestmanagementhibernate.bean.Customer;
+
+public interface CustomerServices {
+	public boolean addCustomer(Customer bean);
+	public boolean deleteCustomer(int customerId);
+	public Customer getCustomer(int customerid);
+	public List<Customer> getCustomers();
+	public boolean updateCustomer(int customerId,Customer bean);
+
+
+}

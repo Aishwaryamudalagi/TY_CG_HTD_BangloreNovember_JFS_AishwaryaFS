@@ -1,0 +1,107 @@
+package com.capgemini.forestrymanagementsystem.dao;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+import com.capgemini.forestmanagementsystem.controller.Home;
+import com.capgemini.forestrymanagementsystem.bean.ContractBean;
+import com.capgemini.forestrymanagementsystem.bean.CustomerBean;
+import com.capgemini.forestrymanagementsystem.bean.ProductBean;
+
+
+public class ContractDAOImpl implements ContractDAO {
+	private List<ContractBean> beans=new ArrayList<ContractBean>();
+	Scanner scanner = new Scanner(System.in);
+
+	@Override
+	public boolean addContract(ContractBean bean) {
+		for(ContractBean contractbean : beans)
+		{
+			if(contractbean.getContractno()==bean.getContractno())
+			{
+				return false;
+			}
+		}
+		beans.add(bean);
+
+		return true;
+	}
+
+	@Override
+	public boolean deleteContract(int contractno) {
+		for(ContractBean contractbean : beans)
+		{
+			ContractBean bean = null;
+			if(contractbean.getContractno()==contractno)
+			{
+				bean=contractbean;
+			}
+
+			if(bean!=null)
+			{
+				beans.remove(bean);
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	@Override
+	public ContractBean getContract(int contractno) {
+		for(ContractBean forestbean : beans)
+		{
+
+			if(forestbean.getContractno()==contractno)
+			{
+				return forestbean;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public List<ContractBean> getContracts() {
+
+		return beans;
+	}
+
+	@Override
+	public boolean modify(int contractNo,ContractBean contract) {
+		for(ContractBean contractbean : beans)
+		{
+			if(contractbean.getContractno()==contractNo)
+			{
+				System.out.println("Choose the option\n1.Customer Id\n2.Product Id\n3.Haulier Id\n4.Delivery Date\n5.Delivery Day\n6.Quantity\n7.Home");
+				int choice=scanner.nextInt();
+				switch(choice)
+				{
+				case 1 : System.out.println("Enter the Customer Id to be modified");
+				contractbean.setCustomerid(scanner.nextInt());
+				break;
+				case 2 : System.out.println("Enter the Product Id to be modified");
+				contractbean.setProductid(scanner.nextInt());
+				break;
+				case 3 : System.out.println("Enter the Haulier Id to be modified");
+				contractbean.setHaulierid(scanner.nextInt());
+				break;
+				case 4 : System.out.println("Enter the Delivery date to be modified");
+				contractbean.setDeliverydate(scanner.next());
+				break;
+				case 5 : System.out.println("Enter the Postal code to be modified");
+				contractbean.setDeliveryday(scanner.next());
+				break;
+				case 6 : System.out.println("Enter the Quantity to be modified");
+				contractbean.setQuantity(scanner.nextInt());
+				break;
+				case 7 : Home.main();
+				break;
+				}
+
+			}
+			return true;
+		}
+		return false;
+	}
+}

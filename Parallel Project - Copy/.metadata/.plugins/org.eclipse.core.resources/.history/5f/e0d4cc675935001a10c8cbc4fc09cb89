@@ -1,0 +1,133 @@
+package com.capgemini.forestmanagementsystem.controller;
+
+import java.util.List;
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import com.capgemini.forestmanagementsystem.factory.CustomerFactory;
+import com.capgemini.forestmanagementsystem.factory.LandFactory;
+import com.capgemini.forestrymanagementsystem.bean.CustomerBean;
+import com.capgemini.forestrymanagementsystem.dao.ForestDAO;
+import com.capgemini.forestrymanagementsystem.services.ForestServices;
+import com.capgemini.forestrymanagementsystem.services.LandServices;
+import com.capgemini.forestrymanagementsystem.validations.validations;
+
+public class CustomerMain 
+{
+	public static void main() {
+		ForestServices service=CustomerFactory.instanceOfForestServices();
+		Scanner sc = new Scanner(System.in);
+		while(true)
+		{
+		System.out.println("Press 1 to insert customer data...");
+		System.out.println("Press 2 to delete customer data...");
+		System.out.println("press 3 to search customer data...");
+		System.out.println("Press 4 to get customer data...");
+		System.out.println("Press 5 to modify the data...");
+		System.out.println("Press 6 to home");
+		int choice=sc.nextInt();
+		switch(choice)
+		{
+		case 1 :CustomerBean bean= new CustomerBean(); 
+		boolean variable=true;
+		while(variable==true) {
+			System.out.println("Enter Customer Id");
+			String id=sc.next();
+			if(validations.isNumber(id)) {
+				int customerId=Integer.parseInt(id);
+				variable=false;
+				bean.setCustomerid(customerId);
+			} else {
+				System.err.println("Id should contain numbers only");
+			}
+		}
+		boolean matcher=true;
+		while(matcher==true) {
+			System.out.println("Enter customer Name,1st character should be capital");
+		}
+		boolean check= service.addCustomer(bean);
+		if(check)
+		{
+			System.out.println("Customer added to list");
+		}
+		else
+		{
+			System.err.println("Customer couldnt be added to list as customer Id was repeated!! ");
+		}
+		break;
+		
+		
+		
+		case 2 :System.out.println("Enter the customer id to delete");
+				int customerid1=sc.nextInt();
+				boolean check1=service.deleteCustomer(customerid1);
+				if(check1)
+				{
+					System.out.println("Customer deleted...");
+				}
+				else
+				{
+					System.err.println("Customer Id to be delted is not present...");
+				}
+		
+			break;
+		case 3 :
+			System.out.println("Enter id to search...");
+			int customer_id = sc.nextInt();
+			CustomerBean forestbean = service.getCustomer(customer_id);
+			if(forestbean!=null)
+			{
+				
+				System.out.println(forestbean.getCustomerid());
+				System.out.println(forestbean.getCustomerName());
+				System.out.println(forestbean.getStreetAddress());
+				System.out.println(forestbean.getStreetAddress2());
+				System.out.println(forestbean.getTown());
+				System.out.println(forestbean.getPostalCode());
+				System.out.println(forestbean.getEmail());
+				System.out.println(forestbean.getTelePhoneno());
+			}
+			else
+			{
+				System.err.println("Customer not found....");
+			}
+		break;
+		
+		case 4 :
+			List<CustomerBean> check11=service.getCustomers();
+			if(check11!=null)
+			{
+				System.out.println("Customer details are...");
+				System.out.println(check11);
+			}
+			else
+			{
+				System.err.println("Customer details couldnt be displayed...");
+			}
+			break;
+			
+		case 5 :
+			System.out.println("Enter the telephone to modify");
+			long telephoneno=sc.nextLong();
+			boolean check111=service.modify(telephoneno);
+			if(check111) 
+			{
+				System.out.println("Customer modified...");
+			}
+			else
+			{
+				System.err.println("Customer couldnt be modified...");
+			}
+			
+		case 6 :Home.main();
+		break;
+			
+			
+		
+		}
+		}
+		
+	}
+
+}

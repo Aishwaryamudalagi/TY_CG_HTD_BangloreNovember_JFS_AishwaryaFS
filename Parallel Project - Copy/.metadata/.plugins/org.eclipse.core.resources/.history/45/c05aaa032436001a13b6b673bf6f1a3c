@@ -1,0 +1,122 @@
+package com.capgemini.forestmanagementspringrest.dao;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+import javax.persistence.PersistenceUnit;
+import javax.persistence.Query;
+
+import org.springframework.stereotype.Repository;
+
+import com.capgemini.forestmanagementspringrest.dto.Customer;
+import com.capgemini.forestmanagementspringrest.dto.Order;
+import com.capgemini.forestmanagementspringrest.exceptions.DuplicateEntryException;
+@Repository
+public class OrderDAOImpl implements OrderDAO{
+	@PersistenceUnit
+	EntityManagerFactory entityManagerFactory;
+
+	@Override
+	public boolean addOrder(Order bean) {
+		EntityManager entitymanager=null;
+		EntityTransaction transaction=null;
+		try {
+		entitymanager= entityManagerFactory.createEntityManager();
+		transaction=entitymanager.getTransaction();
+		transaction.begin();
+		entitymanager.persist(bean);
+		transaction.commit();
+		} catch(Exception e)
+		{
+			
+			transaction.rollback();
+			throw new DuplicateEntryException("Id is repeated");
+			
+		}
+		
+		entitymanager.close();
+		return true;
+	}
+	@Override
+	public boolean deleteOrder(int orderNo) {
+		Boolean flag=false;
+		try
+		{
+			EntityManager entityManager=entityManagerFactory.createEntityManager();
+			EntityTransaction transaction=entityManager.getTransaction();
+			transaction.begin();
+			Order order=entityManager.find(Order.class, orderNo);
+			entityManager.remove(order);
+			entityManager.getTransaction().commit();
+			entityManager.close();
+			flag=true;
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			
+		}
+		return flag;
+	}
+	@Override
+	public Order getOrder(int orderNo) {
+		EntityManager entityManager=entityManagerFactory.createEntityManager();
+		Order getOrder=entityManager.find(Order.class, orderNo);
+		return getOrder;
+	}
+
+	@Override
+	public List<Order> getOrders() {
+		EntityManager entityManager=null;
+		EntityTransaction transaction=null;
+		try
+		{
+			entityManager=entityManagerFactory.createEntityManager();
+			transaction=entityManager.getTransaction();
+			transaction.begin();
+			String jpql="from Order";
+			Query query=entityManager.createQuery(jpql);
+			List<Order> list=query.getResultList();
+			return list;
+		}
+		catch(Exception e)
+		{
+			transaction.rollback();
+		}
+		entityManager.close();
+		return null;
+	}
+	@Override
+	public boolean updateOrder(int orderNo, int customerId, int productId, int haulierId, String deliveryDate) {
+		EntityTransaction transaction=null;
+		try
+		{
+		EntityManager entityManager=entityManagerFactory.createEntityManager();
+		transaction=entityManager.getTransaction();
+		transaction.begin();
+		Order orders=entityManager.find(Order.class, orderNo);
+		orders.setCustomerId(customerId);
+		orders.setProductId(productId);
+		orders.setHaulierId(haulierId);
+		orders.setDeliveryDate(deliveryDate);
+		customers.setPostalCode(postalCode);
+		customers.setEmail(email);
+		customers.setTelePhoneno(telePhoneNo);
+		transaction.commit();
+		return true;
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			transaction.rollback();
+		}
+		return false;
+	
+		
+	}
+	}
+
+}

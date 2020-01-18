@@ -1,0 +1,196 @@
+package com.capgemini.forestmanagementsystem.controller;
+
+import java.util.List;
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import com.capgemini.forestmanagementsystem.factory.ContractFactory;
+import com.capgemini.forestrymanagementsystem.bean.ContractBean;
+import com.capgemini.forestrymanagementsystem.bean.CustomerBean;
+import com.capgemini.forestrymanagementsystem.dao.ContractDAO;
+import com.capgemini.forestrymanagementsystem.services.ContractServices;
+import com.capgemini.forestrymanagementsystem.validations.validations;
+
+
+public class ContractMain {
+	public static void main() {
+		ContractServices service=ContractFactory.instanceOfContractServices();
+		Scanner scanner = new Scanner(System.in);
+		while(true)
+		{
+		System.out.println("Press 1 to insert contract details...");
+		System.out.println("Press 2 to delete contract details...");
+		System.out.println("press 3 to search contract Data...");
+		System.out.println("press 4 to get all contract Data...");
+		System.out.println("press 5 to modify contract data");
+		System.out.println("press 6 for home");
+		
+		int choice=scanner.nextInt();
+		switch(choice)
+		{
+		case 1 : ContractBean bean= new ContractBean();
+		boolean variable=true;
+		while(variable==true) {
+			System.out.println("Enter Contract number");
+			String no=scanner.next();
+			if(validations.isNumber(no)) {
+				int contractNo=Integer.parseInt(no);
+				variable=false;
+				bean.setContractno(contractNo);
+			} else {
+				System.err.println("Contract number should contain numbers only");
+			}
+		}
+		boolean idmatcher=true;
+		while(idmatcher==true) {
+			System.out.println("Enter Customer Id");
+			String id=scanner.next();
+			if(validations.isNumber(id)) {
+				int customerId=Integer.parseInt(id);
+				idmatcher=false;
+				bean.setCustomerid(customerId);
+			} else {
+				System.err.println("Id should contain numbers only");
+			}
+		}
+		boolean productmatcher=true;
+		while(productmatcher==true) {
+			System.out.println("Enter Product Id");
+			String identifier=scanner.next();
+			if(validations.isNumber(identifier)) {
+				int productId=Integer.parseInt(identifier);
+				productmatcher=false;
+				bean.setProductid(productId);
+			} else {
+				System.err.println("Id should contain numbers only");
+			}
+		}
+		boolean hauliermatcher=true;
+		while(hauliermatcher==true) {
+			System.out.println("Enter Haulier Id");
+			String hauliers=scanner.next();
+			if(validations.isNumber(hauliers)) {
+				int haulierid=Integer.parseInt(hauliers);
+				hauliermatcher=false;
+				bean.setHaulierid(haulierid);
+			} else {
+				System.err.println("Id should contain numbers only");
+			}
+		}
+		boolean datematcher=true;
+		while(datematcher==true) {
+			System.out.println("Enter Delivery date");
+			String delivery=scanner.next();
+			if(validations.dateValid(delivery)) {
+				datematcher=false;
+				bean.setDeliverydate(delivery);
+			} else {
+				System.err.println("Provide date in proper format");
+			}
+		}
+		boolean daymatcher=true;
+		while(daymatcher==true) {
+			System.out.println("Enter Delivery day");
+			String deliveryday=scanner.next();
+			if(validations.dayValid(deliveryday)) {
+				daymatcher=false;
+				bean.setDeliverydate(deliveryday);
+			} else {
+				System.err.println("Provide proper week day");
+			}
+		}
+		boolean qtymatcher=true;
+		while(qtymatcher==true) {
+			System.out.println("Enter Quantity");
+			String qnty=scanner.next();
+			if(validations.isNumber(qnty)) {
+				int quantity=Integer.parseInt(qnty);
+				qtymatcher=false;
+				bean.setQuantity(quantity);
+			} else {
+				System.err.println("Enter Proper Quantity");
+			}
+		}
+		boolean check= service.addContract(bean);
+		if(check)
+		{
+			System.out.println("contract added list");	
+		}
+		else
+		{
+			System.out.println( "contract is repeated");
+		}
+		break;
+		
+		
+		case 2 :System.out.println("Enter the contractno to delete");
+		int contractNumber=scanner.nextInt();
+		boolean checks=service.deleteContract(contractNumber);
+		if(checks)
+		{
+			System.out.println("Contract deleted...");
+		}
+		else
+		{
+			System.out.println("Something went wrong...");
+		}
+
+	break;
+		case 3 :
+			System.out.println("Enter contract no to serach...");
+			int contractno = scanner.nextInt();
+			ContractBean forestbean = service.getContract(contractno);
+			if(forestbean!=null)
+			{
+				
+				System.out.println(forestbean.getContractno());
+				System.out.println(forestbean.getCustomerid());
+				System.out.println(forestbean.getProductid());
+				System.out.println(forestbean.getHaulierid());
+				System.out.println(forestbean.getDeliverydate());
+				System.out.println(forestbean.getDeliveryday());
+				System.out.println(forestbean.getQuantity());
+				
+			}
+			else
+			{
+				System.out.println("Contract not found....");
+			}
+		break;
+		case 4 :
+			List<ContractBean> lists=service.getContracts();
+			for (ContractBean contractBean : lists) {
+				
+			
+			if(lists!=null)
+			{
+				System.out.println("Contract details are...");
+				System.out.println(lists);
+			}
+			else
+			{
+				System.out.println("Contract details couldnt be displayed...");
+			}
+			}
+			break;
+		case 5: System.out.println("Enter the contract Id to modify");
+		int contractId=scanner.nextInt();
+		boolean code=service.modify(contractId);
+		if(code) 
+		{
+			System.out.println("Contract modidfied...");
+		}
+		else
+		{
+			System.err.println("Contract couldnt be modified...");
+		}
+		case 6 :Home.main();
+		break;
+			
+		}
+		}
+	}
+		
+
+}

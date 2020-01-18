@@ -1,0 +1,6 @@
+package com.capgemini.forestmanagementspringrest.dao;
+public interface AdminDAO {
+	public boolean register
+	public boolean login(int id,String password);
+
+}

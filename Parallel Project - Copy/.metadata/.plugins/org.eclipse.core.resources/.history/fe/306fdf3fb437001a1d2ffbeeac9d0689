@@ -1,0 +1,185 @@
+package com.capgemini.forestmanagementsystem.controller;
+import java.util.List;
+import java.util.Scanner;
+
+import com.capgemini.forestmanagementsystem.factory.ContractFactory;
+import com.capgemini.forestmanagementsystem.factory.HaulierFactory;
+
+import com.capgemini.forestrymanagementsystem.bean.HaulierBean;
+import com.capgemini.forestrymanagementsystem.dao.HaulierDAO;
+import com.capgemini.forestrymanagementsystem.services.ContractServices;
+import com.capgemini.forestrymanagementsystem.services.HaulierServices;
+import com.capgemini.forestrymanagementsystem.validations.validations;
+
+//import com.capgemini.forestrymanagementsystem.bean.ForestBean;
+
+public class HaulierMain 
+{
+	public static void main() 
+	{
+		HaulierServices service=HaulierFactory.instanceOfHaulierServices();
+		Scanner scanner = new Scanner(System.in);
+		while(true)
+		{
+			System.out.println("Press 1 to insert Haulier data...");
+			System.out.println("Press 2 to delete Haulier data...");
+			System.out.println("press 3 to search Haulier data...");
+			System.out.println("Press 4 to get Haulier data...");
+			System.out.println("Press 5 to modify the data...");
+			System.out.println("Press 6 to home");
+			int choice=scanner.nextInt();
+			switch(choice)
+			{
+			case 1 :HaulierBean bean= new HaulierBean(); 
+			boolean hauliermatcher=true;
+			while(hauliermatcher==true) {
+				System.out.println("Enter Haulier Id");
+				String hauliers=scanner.next();
+				if(validations.isNumber(hauliers)) {
+					int haulierid=Integer.parseInt(hauliers);
+					hauliermatcher=false;
+					bean.setHaulierId(haulierid);
+				} else {
+					System.err.println("Id should contain numbers only");
+				}
+			}
+			boolean matcher=true;
+			while(matcher==true) {
+				System.out.println("Enter Haulier Name,1st character should be capital");
+				String name=scanner.next();
+				if(validations.StringOnlyAlphabet(name)) {
+					matcher=false;
+					bean.setHaulierName(name);
+				}
+				else {
+					System.err.println("Enter the name is correct format");
+				}
+			}
+			boolean emailmatcher=true;
+			while(emailmatcher==true) {
+				System.out.println("Enter Email Id");
+				String email=scanner.next();
+				if(validations.validEmail(email)) {
+					emailmatcher=false;
+					bean.setEmail(email);
+				}
+				else {
+					System.err.println("Provide proper email id");
+				}
+			}
+			boolean phone=true;
+			while(phone==true) {
+				System.out.println("Enter mobile number");
+				String number=scanner.next();
+				if(validations.validTelephone(number)) {
+					long teleno=Long.parseLong(number);
+					phone=false;
+					bean.setTelephone(teleno);
+				}
+				else {
+					System.err.println("Provide proper Phone number");
+				}
+			}
+			boolean check= service.addHaulier(bean);
+			if(check)
+			{
+				System.out.println("Haulier added to list");
+			}
+			else
+			{
+				System.err.println("Haulier couldnt be added to list");
+			}
+			break;
+			case 2 :System.out.println("Enter the haulier id to delete");
+			int haulierid=scanner.nextInt();
+			boolean check1=service.deleteHaulier(haulierid);
+			if(check1)
+			{
+				System.out.println("Haulier deleted...");
+			}
+			else
+			{
+				System.err.println("Haulier couldnt be deleted...");
+			}
+
+			break;
+			case 3 :
+				System.out.println("Enter id to search...");
+				int haulierId = scanner.nextInt();
+				HaulierBean haulierbean = service.getHaulier(haulierId);
+				if(haulierbean!=null)
+				{
+
+					System.out.println(haulierbean.getHaulierId());
+					System.out.println(haulierbean.getHaulierName());
+					System.out.println(haulierbean.getEmail());
+					System.out.println(haulierbean.getTelephone());
+
+				}
+				else
+				{
+					System.err.println("Haulier not found....");
+				}
+				break;
+			case 4 :
+				List<HaulierBean> check11=service.getHauliers();
+				if(check11!=null)
+				{
+					System.out.println("Haulier details are...");
+					System.out.println(check11);
+				}
+				else
+				{
+					System.err.println("Haulier details couldnt be displayed...");
+				}
+				break;
+			case 5 :
+				HaulierBean haulier= new HaulierBean();
+				int hauliersid=0;
+				boolean hauliermatches=true;
+				while(hauliermatches==true) {
+					System.out.println("Enter Haulier Id");
+					String hauliers=scanner.next();
+					if(validations.isNumber(hauliers)) {
+						hauliersid=Integer.parseInt(hauliers);
+						hauliermatches=false;
+						haulier.setHaulierId(hauliersid);
+					} else {
+						System.err.println("Id should contain numbers only");
+					}
+				}
+				boolean matches=true;
+				while(matches==true) {
+					System.out.println("Enter Haulier Name,1st character should be capital");
+					String name=scanner.next();
+					if(validations.StringOnlyAlphabet(name)) {
+						matches=false;
+						contract.setHaulierName(name);
+					}
+					else {
+						System.err.println("Enter the name is correct format");
+					}
+				}
+				
+				
+				
+				
+				
+				System.out.println("Enter the HaulierId to modify");
+				int hauliersId=scanner.nextInt();
+				boolean check111=service.modify(hauliersId);
+				if(check111) 
+				{
+					System.out.println("Haulier modidfied...");
+				}
+				else
+				{
+					System.err.println("Haulier couldnt be modified...");
+				}
+
+			case 6 :Home.main();
+
+			}
+		}
+	}
+}

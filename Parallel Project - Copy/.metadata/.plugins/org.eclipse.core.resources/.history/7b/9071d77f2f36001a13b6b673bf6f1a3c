@@ -1,0 +1,46 @@
+package com.capgemini.forestmanagementspringrest.services;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.capgemini.forestmanagementspringrest.dao.LandDAO;
+import com.capgemini.forestmanagementspringrest.dao.OrderDAO;
+import com.capgemini.forestmanagementspringrest.dto.Order;
+@Service
+public class OrderServicesImpl implements OrderServices{
+	@Autowired
+	private OrderDAO dao;
+
+	@Override
+	public boolean addOrder(Order bean) {
+		
+		return dao.addOrder(bean);
+	}
+
+	@Override
+	public boolean deleteOrder(int orderNo) {
+		
+		return dao.deleteOrder(orderNo);
+	}
+
+	@Override
+	public Order getOrder(int orderNo) {
+		
+		return dao.getOrder(orderNo);
+	}
+
+	@Override
+	public List<Order> getOrders() {
+		
+		return dao.getOrders();
+	}
+
+	@Override
+	public boolean updateOrder(int orderNo, int customerId, int productId, int haulierId, String deliveryDate) {
+		
+		return dao.updateOrder(orderNo, customerId, productId, haulierId, deliveryDate);
+	}
+
+}

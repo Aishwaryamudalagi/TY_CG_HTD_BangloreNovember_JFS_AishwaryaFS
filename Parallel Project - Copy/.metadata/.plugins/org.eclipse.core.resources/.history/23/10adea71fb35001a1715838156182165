@@ -1,0 +1,71 @@
+package com.capgemini.forestmanagementspringrest.dto;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="contract")
+public class Contract {
+	@Id
+	@Column
+	private int contractNo;
+	@Column
+	private int customerId;
+	@Column
+	private int productId;
+	@Column
+	private int haulierId;
+	@Column
+	private String deliveryDate;
+	@Column
+	private String deliveryDay;
+	@Column
+	private int quantity;
+	public int getContractno() {
+		return contractNo;
+	}
+	public void setContractno(int contractno) {
+		this.contractNo = contractno;
+	}
+	public int getCustomerid() {
+		return customerId;
+	}
+	public void setCustomerid(int customerid) {
+		this.customerId = customerid;
+	}
+	public int getProductid() {
+		return productId;
+	}
+	public void setProductid(int productid) {
+		this.productId = productid;
+	}
+	public int getHaulierid() {
+		return haulierId;
+	}
+	public void setHaulierid(int haulierid) {
+		this.haulierId = haulierid;
+	}
+	public String getDeliverydate() {
+		return deliveryDate;
+	}
+	public void setDeliverydate(String deliverydate) {
+		this.deliveryDate = deliverydate;
+	}
+	public String getDeliveryday() {
+		return deliveryDay;
+	}
+	public void setDeliveryday(String deliveryday) {
+		this.deliveryDay = deliveryday;
+	}
+	public int getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+	
+
+
+}

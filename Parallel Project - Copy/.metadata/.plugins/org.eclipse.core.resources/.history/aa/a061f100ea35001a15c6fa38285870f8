@@ -1,0 +1,51 @@
+package com.capgemini.forestmanagementspringrest.dto;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="haulier")
+public class Haulier {
+	@Id
+	@Column(name="haulierid")
+	private int haulierId;
+	@Column(name="hauliername")
+	private String haulierName;
+	@Column(name="email")
+	private String email;
+	@Column(name="telephoneno")
+	private Long telephoneNumber;
+	@Override
+	public String toString() {
+		return "Haulier [haulierId=" + haulierId + ", haulierName=" + haulierName + ", email=" + email
+				+ ", telephoneNumber=" + telephoneNumber + "]";
+	}
+	
+	public int getHaulierId() {
+		return haulierId;
+	}
+	public void setHaulierId(int haulierId) {
+		this.haulierId = haulierId;
+	}
+	public String getHaulierName() {
+		return haulierName;
+	}
+	public void setHaulierName(String haulierName) {
+		this.haulierName = haulierName;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public Long getTelephoneNumber() {
+		return telephoneNumber;
+	}
+	public void setTelephoneNumber(Long telephoneNumber) {
+		this.telephoneNumber = telephoneNumber;
+	}
+
+}

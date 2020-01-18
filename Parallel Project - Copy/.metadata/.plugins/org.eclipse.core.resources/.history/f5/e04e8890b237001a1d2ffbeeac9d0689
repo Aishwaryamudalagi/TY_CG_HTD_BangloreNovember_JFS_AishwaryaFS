@@ -1,0 +1,83 @@
+package com.capgemini.forestrymanagementsystem.dao;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+import com.capgemini.forestmanagementsystem.controller.Home;
+import com.capgemini.forestrymanagementsystem.bean.ContractBean;
+import com.capgemini.forestrymanagementsystem.bean.CustomerBean;
+import com.capgemini.forestrymanagementsystem.bean.ProductBean;
+
+
+public class ContractDAOImpl implements ContractDAO {
+	private List<ContractBean> beans=new ArrayList<ContractBean>();
+	Scanner scanner = new Scanner(System.in);
+
+	@Override
+	public boolean addContract(ContractBean bean) {
+		for(ContractBean contractbean : beans)
+		{
+			if(contractbean.getContractno()==bean.getContractno())
+			{
+				return false;
+			}
+		}
+		beans.add(bean);
+
+		return true;
+	}
+
+	@Override
+	public boolean deleteContract(int contractno) {
+		for(ContractBean contractbean : beans)
+		{
+			ContractBean bean = null;
+			if(contractbean.getContractno()==contractno)
+			{
+				bean=contractbean;
+			}
+
+			if(bean!=null)
+			{
+				beans.remove(bean);
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	@Override
+	public ContractBean getContract(int contractno) {
+		for(ContractBean forestbean : beans)
+		{
+
+			if(forestbean.getContractno()==contractno)
+			{
+				return forestbean;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public List<ContractBean> getContracts() {
+
+		return beans;
+	}
+
+	@Override
+	public boolean modify(int contractNo,ContractBean contract) {
+		for(ContractBean contractbean : beans)
+		{
+			if(contractbean.getContractno()==contractNo)
+			{
+				contractbean.setContractno(contractNo);
+				
+			}
+			return true;
+		}
+		return false;
+	}
+}

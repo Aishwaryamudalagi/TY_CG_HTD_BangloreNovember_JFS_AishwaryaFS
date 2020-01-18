@@ -1,0 +1,17 @@
+
+package com.capgemini.hibernate.dao;
+
+import java.util.List;
+
+import com.capgemini.hibernate.bean.Haulier;
+
+
+public interface HaulierDAO {
+
+	public boolean addHaulier(Haulier bean);
+	public boolean deleteHaulier(int haulierId);
+	public boolean updateHaulier(int haulierId,Haulier bean);
+	public List<Haulier> getHaulier();
+}
+
+

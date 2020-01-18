@@ -1,0 +1,111 @@
+package com.capgemini.forestmanagementspringrest.dao;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+import javax.persistence.PersistenceUnit;
+import javax.persistence.Query;
+
+import org.springframework.stereotype.Repository;
+
+import com.capgemini.forestmanagementspringrest.dto.Customer;
+import com.capgemini.forestmanagementspringrest.dto.Haulier;
+import com.capgemini.forestmanagementspringrest.exceptions.DuplicateEntryException;
+@Repository
+public class HaulierDAOImpl implements HaulierDAO{
+	@PersistenceUnit
+	EntityManagerFactory entityManagerFactory;
+
+
+	@Override
+	public boolean addHaulier(Haulier bean) {
+		EntityManager entitymanager=null;
+		EntityTransaction transaction=null;
+		
+		try {
+		entitymanager= entityManagerFactory.createEntityManager();
+		transaction=entitymanager.getTransaction();
+		transaction.begin();
+		entitymanager.persist(bean);
+		//System.out.println("Record saved...");
+		transaction.commit();
+		//flag=true;
+		} catch(Exception e)
+		{
+			
+			transaction.rollback();
+			throw new DuplicateEntryException("Id is repeated");
+			
+		}
+		
+		entitymanager.close();
+		return true;
+	}
+
+	@Override
+	public boolean deleteHaulier(int HaulierId) {
+		Boolean flag=false;
+		try
+		{
+			EntityManagerFactory entityManagerFactory=Persistence.createEntityManagerFactory("Test");
+			EntityManager entityManager=entityManagerFactory.createEntityManager();
+			EntityTransaction transaction=entityManager.getTransaction();
+			transaction.begin();
+			Haulier haulier=entityManager.find(Haulier.class, HaulierId);
+			entityManager.remove(haulier);
+			entityManager.getTransaction().commit();
+			entityManager.close();
+			flag=true;
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			
+		}
+		return flag;
+	}
+
+		
+
+	@Override
+	public Haulier getHaulier(int HaulierId) {
+		EntityManagerFactory entityManagerFactory=Persistence.createEntityManagerFactory("Test");
+		EntityManager entityManager=entityManagerFactory.createEntityManager();
+		Haulier getHaulier=entityManager.find(Haulier.class, HaulierId);
+		return getHaulier;
+	}
+
+	@Override
+	public List<Haulier> getHauliers() {
+		EntityManager entityManager=null;
+		EntityTransaction transaction=null;
+		try
+		{
+			entityManager=entityManagerFactory.createEntityManager();
+			transaction=entityManager.getTransaction();
+			transaction.begin();
+			String jpql="from haulier";
+			Query query=entityManager.createQuery(jpql);
+			List<Haulier> list=query.getResultList();
+			return list;
+		}
+		catch(Exception e)
+		{
+			transaction.rollback();
+		}
+		entityManager.close();
+		return null;
+	}
+	}
+
+	@Override
+	public boolean updateHaulier(int customerId, String customerName, String streetAddress, String streetAddress2,
+			String town, String postalCode, String email, Long telePhoneNo) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+}

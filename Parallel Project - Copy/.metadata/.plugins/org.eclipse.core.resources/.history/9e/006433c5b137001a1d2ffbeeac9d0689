@@ -1,0 +1,44 @@
+package com.capgemini.forestrymanagementsystem.services;
+
+import java.util.List;
+
+import com.capgemini.forestmanagementsystem.factory.ContractFactory;
+import com.capgemini.forestrymanagementsystem.bean.ContractBean;
+import com.capgemini.forestrymanagementsystem.dao.ContractDAO;
+
+
+public class ContractServicesImpl implements ContractServices{
+	ContractDAO dao=ContractFactory.instanceOfContractDAOImpl();
+
+
+	@Override
+	public boolean addContract(ContractBean bean) {
+		
+		return dao.addContract(bean);
+	}
+
+	@Override
+	public boolean deleteContract(int contractno) {
+		
+		return dao.deleteContract(contractno);
+	}
+
+	@Override
+	public ContractBean getContract(int contractno) {
+		
+		return dao.getContract(contractno);
+	}
+
+	@Override
+	public List<ContractBean> getContracts() {
+		
+		return dao.getContracts();
+	}
+
+	@Override
+	public boolean modify(int contractId,ContractBean contract) {
+		
+		return dao.modify(contractId);
+	}
+
+}

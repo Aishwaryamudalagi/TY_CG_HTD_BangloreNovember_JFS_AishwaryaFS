@@ -1,0 +1,42 @@
+package com.capgemini.forestmanagementspringrest.services;
+
+import java.util.List;
+
+import com.capgemini.forestmanagementhibernate.bean.Product;
+import com.capgemini.forestmanagementhibernate.dao.ProductDAO;
+import com.capgemini.forestmanagementhibernate.factory.ProductFactory;
+
+public class ProductServicesImpl implements ProductServices{
+	ProductDAO dao=ProductFactory.instanceOfProductDAOImpl();
+
+	@Override
+	public boolean addProduct(Product bean) {
+		
+		return dao.addProduct(bean);
+	}
+
+	@Override
+	public boolean deleteProduct(int productId) {
+		
+		return dao.deleteProduct(productId);
+	}
+
+	@Override
+	public boolean updateProduct(int productid,Product product) {
+		
+		return dao.updateProduct(productid,product);
+	}
+
+	@Override
+	public List<Product> getProducts() {
+		
+		return dao.getProducts();
+	}
+
+	@Override
+	public Product getProduct(int productid) {
+		
+		return dao.getProduct(productid);
+	}
+
+}

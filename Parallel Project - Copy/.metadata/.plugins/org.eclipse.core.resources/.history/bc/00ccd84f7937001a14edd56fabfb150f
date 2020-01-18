@@ -1,0 +1,110 @@
+package com.capgemini.forestrymanagementsystem.dao;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+import com.capgemini.forestmanagementsystem.controller.Home;
+import com.capgemini.forestrymanagementsystem.bean.CustomerBean;
+
+public class ForestDAOImpl implements ForestDAO {
+	Scanner sc = new Scanner(System.in);
+private List<CustomerBean> forestbeans=new ArrayList<CustomerBean>();
+	@Override
+	public boolean addCustomer(CustomerBean bean) {
+		for(CustomerBean forestbean : forestbeans)
+		{
+			if(forestbean.getCustomerid()==bean.getCustomerid())
+			{
+				return false;
+			}
+		}
+		forestbeans.add(bean);
+		{
+			return true;
+		}
+		
+	}
+
+	@Override
+	public boolean deleteCustomer(int customerid) {
+		for(CustomerBean forestbean : forestbeans)
+		{
+			CustomerBean bean = null;
+			if(forestbean.getCustomerid()==customerid)
+			{
+				bean=forestbean;
+			}
+		
+		if(bean!=null)
+		{
+			forestbeans.remove(bean);
+			return true;
+		}
+	}
+		
+		
+		return false;
+		
+	}
+
+	@Override
+	public CustomerBean getCustomer(int customerid) {
+		for(CustomerBean forestbean : forestbeans)
+		{
+			
+			if(forestbean.getCustomerid()==customerid)
+			{
+				return forestbean;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public List<CustomerBean> getCustomers() {
+		
+		return forestbeans;
+	}
+
+	@Override
+	public boolean modify(int customerId) {
+		for(CustomerBean forestBean:forestbeans)
+		{
+			if(forestBean.getCustomerid()==customerId)
+			{
+				System.out.println("Choose the option\n1.Customer Name\n2.Street Address1\n3.Street Address2\n4.town\n5.Postal code\n6.Email\n7.Home");
+				int choice=sc.nextInt();
+				switch(choice)
+				{
+				case 1 : System.out.println("Enter the name to be modified");
+							forestBean.setCustomerName(sc.next());
+							break;
+				case 2 : System.out.println("Enter the Street Address1 to be modified");
+							forestBean.setStreetAddress(sc.next());
+							break;
+				case 3 : System.out.println("Enter the Street Address2 to be modified");
+							forestBean.setStreetAddress2(sc.next());
+							break;
+				case 4 : System.out.println("Enter the Street town to be modified");
+							forestBean.setTown(sc.next());
+							break;
+				case 5 : System.out.println("Enter the Postal code to be modified");
+							forestBean.setPostalCode(sc.next());
+							break;
+				case 6 : System.out.println("Enter the Email to be modified");
+							forestBean.setEmail(sc.next());
+							break;
+				case 7 : Home.main();
+							break;
+				}
+				
+			}
+			return true;
+		}
+
+		
+		return false;
+	}
+
+}

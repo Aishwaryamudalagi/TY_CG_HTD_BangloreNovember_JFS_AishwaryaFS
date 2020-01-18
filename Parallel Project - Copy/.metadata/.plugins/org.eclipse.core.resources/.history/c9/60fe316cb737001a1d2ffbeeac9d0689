@@ -1,0 +1,223 @@
+package com.capgemini.forestmanagementsystem.controller;
+
+import java.util.List;
+import java.util.Scanner;
+
+import com.capgemini.forestmanagementsystem.factory.CustomerFactory;
+import com.capgemini.forestmanagementsystem.factory.OrderFactory;
+import com.capgemini.forestrymanagementsystem.bean.CustomerBean;
+import com.capgemini.forestrymanagementsystem.bean.OrderBean;
+import com.capgemini.forestrymanagementsystem.dao.ForestDAO;
+import com.capgemini.forestrymanagementsystem.dao.OrderDAO;
+import com.capgemini.forestrymanagementsystem.validations.validations;
+
+public class OrderMain {
+	public static void main() {
+		OrderDAO dao = OrderFactory.getOrderDAO();
+		Scanner scanner = new Scanner(System.in);
+		while(true)
+		{
+			System.out.println("Press 1 to insert Order...");
+			System.out.println("Press 2 to delete Order...");
+			System.out.println("press 3 to search Order...");
+			System.out.println("Press 4 to get Order information...");
+			System.out.println("Press 5 to modify the Order...");
+			System.out.println("Press 6 to home");
+			int choice=scanner.nextInt();
+			switch(choice)
+			{
+			case 1 :OrderBean bean= new OrderBean(); 
+			boolean variable=true;
+			while(variable==true) {
+				System.out.println("Enter Order number");
+				String no=scanner.next();
+				if(validations.isNumber(no)) {
+					int orderNo=Integer.parseInt(no);
+					variable=false;
+					bean.setOrderNo(orderNo);
+				} else {
+					System.err.println("Order number should contain numbers only");
+				}
+			}
+			boolean idmatcher=true;
+			while(idmatcher==true) {
+				System.out.println("Enter Customer Id");
+				String id=scanner.next();
+				if(validations.isNumber(id)) {
+					int customerId=Integer.parseInt(id);
+					idmatcher=false;
+					bean.setCustomerId(customerId);
+				} else {
+					System.err.println("Id should contain numbers only");
+				}
+			}
+			boolean productmatcher=true;
+			while(productmatcher==true) {
+				System.out.println("Enter Product Id");
+				String identifier=scanner.next();
+				if(validations.isNumber(identifier)) {
+					int productId=Integer.parseInt(identifier);
+					productmatcher=false;
+					bean.setProductId(productId);
+				} else {
+					System.err.println("Id should contain numbers only");
+				}
+			}
+			boolean hauliermatcher=true;
+			while(hauliermatcher==true) {
+				System.out.println("Enter Haulier Id");
+				String hauliers=scanner.next();
+				if(validations.isNumber(hauliers)) {
+					int haulierid=Integer.parseInt(hauliers);
+					hauliermatcher=false;
+					bean.setHaulierId(haulierid);
+				} else {
+					System.err.println("Id should contain numbers only");
+				}
+			}
+			boolean datematcher=true;
+			while(datematcher==true) {
+				System.out.println("Enter Delivery date");
+				String delivery=scanner.next();
+				if(validations.dateValid(delivery)) {
+					datematcher=false;
+					bean.setDeliveryDate(delivery);
+				} else {
+					System.err.println("Provide date in proper format");
+				}
+			}
+			break;
+			case 2 :System.out.println("Enter the Oder number that needs to be delete");
+			int orderno=scanner.nextInt();
+			boolean checks=dao.deleteOrder(orderno);
+			if(checks)
+			{
+				System.out.println("Order deleted...");
+			}
+			else
+			{
+				System.err.println("Order couldnt be deleted...");
+			}
+
+			break;
+			case 3 :
+				System.out.println("Enter id to search...");
+				int orderNo = scanner.nextInt();
+				OrderBean orderbean = dao.getOrder(orderNo);
+				if(orderbean!=null)
+				{
+
+					System.out.println(orderbean.getOrderNo());
+					System.out.println(orderbean.getCustomerId());
+					System.out.println(orderbean.getProductId());
+					System.out.println(orderbean.getHaulierId());
+					System.out.println(orderbean.getDeliveryDate());
+
+				}
+				else
+				{
+					System.err.println("Order not found....");
+				}
+			break;
+			case 4 :
+				List<OrderBean> status=dao.getOrders();
+				if(status!=null)
+				{
+					System.out.println("Order details are...");
+					System.out.println(status);
+				}
+				else
+				{
+					System.err.println("Order details couldnt be displayed...");
+				}
+				break;
+			case 5 :
+				OrderBean order= new OrderBean(); 
+				int orderNo=0;
+				boolean variables=true;
+				while(variables==true) {
+					System.out.println("Enter Order number");
+					String no=scanner.next();
+					if(validations.isNumber(no)) {
+						orderNo=Integer.parseInt(no);
+						variable=false;
+						bean.setOrderNo(orderNo);
+					} else {
+						System.err.println("Order number should contain numbers only");
+					}
+				}
+				boolean idmatcher=true;
+				while(idmatcher==true) {
+					System.out.println("Enter Customer Id");
+					String id=scanner.next();
+					if(validations.isNumber(id)) {
+						int customerId=Integer.parseInt(id);
+						idmatcher=false;
+						bean.setCustomerId(customerId);
+					} else {
+						System.err.println("Id should contain numbers only");
+					}
+				}
+				boolean productmatcher=true;
+				while(productmatcher==true) {
+					System.out.println("Enter Product Id");
+					String identifier=scanner.next();
+					if(validations.isNumber(identifier)) {
+						int productId=Integer.parseInt(identifier);
+						productmatcher=false;
+						bean.setProductId(productId);
+					} else {
+						System.err.println("Id should contain numbers only");
+					}
+				}
+				boolean hauliermatcher=true;
+				while(hauliermatcher==true) {
+					System.out.println("Enter Haulier Id");
+					String hauliers=scanner.next();
+					if(validations.isNumber(hauliers)) {
+						int haulierid=Integer.parseInt(hauliers);
+						hauliermatcher=false;
+						bean.setHaulierId(haulierid);
+					} else {
+						System.err.println("Id should contain numbers only");
+					}
+				}
+				boolean datematcher=true;
+				while(datematcher==true) {
+					System.out.println("Enter Delivery date");
+					String delivery=scanner.next();
+					if(validations.dateValid(delivery)) {
+						datematcher=false;
+						bean.setDeliveryDate(delivery);
+					} else {
+						System.err.println("Provide date in proper format");
+					}
+				}
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				System.out.println("Enter the Order number to modify");
+				int no=scanner.nextInt();
+				boolean check=dao.modify(no);
+				if(check) 
+				{
+					System.out.println("Order modidfied...");
+				}
+				else
+				{
+					System.err.println("Order couldnt be modified...");
+				}
+				
+			case 6 :Home.main();
+			break;
+				
+			}
+			}
+		}
+	}

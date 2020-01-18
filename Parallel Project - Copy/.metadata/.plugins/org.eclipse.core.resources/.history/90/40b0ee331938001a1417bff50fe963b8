@@ -1,0 +1,100 @@
+package com.capgemini.forestrymanagementsystem.dao;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+import com.capgemini.forestrymanagementsystem.bean.ClientBean;
+import com.capgemini.forestrymanagementsystem.bean.CustomerBean;
+
+public class ClientDAOImpl implements ClientDAO{
+	Scanner sc = new Scanner(System.in);
+	private static List<ClientBean> clientbeans=new ArrayList<ClientBean>();
+	//private static List<ClientBean> bean=new ArrayList<ClientBean>();
+
+	@Override
+	public boolean addClient(ClientBean bean) {
+		for(ClientBean clientbean : clientbeans)
+		{
+			if(clientbean.getEmail()==bean.getEmail())
+			{
+				return false;
+			}
+		}
+		clientbeans.add(bean);
+		{
+			return true;
+		}
+	}
+
+	@Override
+	public boolean deleteClient(String email) {
+		for(ClientBean clientbean : clientbeans)
+		{
+			ClientBean bean = null;
+			if(clientbean.getEmail()==email)
+			{
+				bean=clientbean;
+			}
+		
+		if(bean!=null)
+		{
+			clientbeans.remove(bean);
+			return true;
+		}
+	}
+		return false;
+	}
+
+	@Override
+	public ClientBean getClient(String email) {
+		for(ClientBean clientbean : clientbeans)
+		{
+			
+			if(clientbean.getEmail()==email)
+			{
+				return clientbean;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public List<ClientBean> getClients() {
+		return clientbeans;
+	}
+
+	@Override
+	public boolean modify(String email,ClientBean client) {
+		for(ClientBean clientBean:clientbeans)
+		{
+			if(clientBean.getEmail()==email)
+			{
+				clientBean.setEmail(email);
+				clientBean.setPassword(client.getPassword());
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public boolean Clientlogin(String email, String password) {
+		for (ClientBean clientBean : clientbeans) {
+			if(clientBean.getEmail().equals(email))
+			{
+				if(clientBean.getPassword().equals(password)) 
+				{
+					System.out.println("Login successfull!!");
+					return true;
+				}
+			}
+			
+		}
+		System.out.println("Wrong Id and password!!");
+		return false;
+	}
+
+	
+
+}

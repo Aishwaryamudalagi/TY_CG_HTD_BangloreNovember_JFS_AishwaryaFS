@@ -1,0 +1,43 @@
+package com.capgemini.forestrymanagementsystem.services;
+
+import java.util.List;
+
+import com.capgemini.forestmanagementsystem.factory.LandFactory;
+import com.capgemini.forestrymanagementsystem.bean.OrderBean;
+import com.capgemini.forestrymanagementsystem.dao.LandDAO;
+
+public class OrderServicesImpl implements OrderServices{
+	OrderDAO dao=OrderFactory.instanceOfOrderDAOImpl();
+
+
+	@Override
+	public boolean addOrder(OrderBean bean) {
+		
+		return dao.add;
+	}
+
+	@Override
+	public boolean deleteOrder(int orderno) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public OrderBean getOrder(int orderno) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<OrderBean> getOrders() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean modify(int orderno, OrderBean order) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+}

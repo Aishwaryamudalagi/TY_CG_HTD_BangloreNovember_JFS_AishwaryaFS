@@ -1,0 +1,57 @@
+package com.capgemini.hibernate.dao;
+
+import java.io.FileReader;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
+import com.capgemini.hibernate.bean.Customer;
+import com.capgemini.hibernate.bean.Haulier;
+
+public class HaulierDAOImpl implements HaulierDAO{
+	
+
+	@Override
+	public boolean addHaulier(Haulier bean) {
+		
+		return false;
+	}
+
+	@Override
+	public boolean deleteHaulier(int haulierId) {
+		
+		return false;
+	}
+
+	@Override
+	public boolean updateHaulier(int haulierId, Haulier bean) {
+		
+		return false;
+	}
+
+	@Override
+	public List<Haulier> getHaulier() {
+		
+			//return list;
+	
+	}
+
+	@Override
+	public Haulier getHaulier(int haulierid) {
+		EntityManagerFactory entityManagerFactory=Persistence.createEntityManagerFactory("Test");
+		EntityManager entityManager=entityManagerFactory.createEntityManager();
+		Haulier getHaulier=entityManager.find(Haulier.class, haulierid);
+		return getHaulier;
+		
+	}
+
+}

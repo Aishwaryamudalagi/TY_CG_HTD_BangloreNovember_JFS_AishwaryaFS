@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">&#x0A;<refactoring comment="Rename resource &apos;hibernate1&apos; to &apos;forestmanagementhibernate&apos;" description="Rename resource &apos;hibernate1&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="/hibernate1" name="forestmanagementhibernate" stamp="1578412277035" updateReferences="true"/>&#x0A;<refactoring comment="Rename resource &apos;jdbc&apos; to &apos;forestmanagementjdbc&apos;" description="Rename resource &apos;jdbc&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="/jdbc" name="forestmanagementjdbc" stamp="1578451185964" updateReferences="true"/>
+</session>

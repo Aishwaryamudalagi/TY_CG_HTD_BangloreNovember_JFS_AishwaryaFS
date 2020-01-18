@@ -1,0 +1,18 @@
+package com.capgemini.forestmanagementspringrest.controller;
+
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import com.capgemini.forestmanagementspringrest.dto.ContractResponse;
+@RestControllerAdvice
+public class ClientControllerAdvice {
+	@ExceptionHandler(Exception.class)
+	public ContractResponse authException(Exception e) {
+		ContractResponse response = new ContractResponse();
+		response.setStatusCode(501);
+		response.setDescription("Exception");
+		response.setMessage(e.getMessage());
+		return response;
+	}
+
+}

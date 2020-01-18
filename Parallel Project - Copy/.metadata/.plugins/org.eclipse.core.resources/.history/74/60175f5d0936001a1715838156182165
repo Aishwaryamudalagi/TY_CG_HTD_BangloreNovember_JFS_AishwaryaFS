@@ -1,0 +1,12 @@
+package com.capgemini.forestmanagementspringrest.services;
+
+import java.util.List;
+
+import com.capgemini.forestmanagementspringrest.dto.Haulier;
+public interface HaulierServices {
+	public boolean addHaulier(Haulier bean);
+	public boolean deleteHaulier(int haulierId);
+	public boolean updateHaulier(int haulierId,Haulier bean);
+	public List<Haulier> getHauliers();
+	public Haulier getHaulier(int haulierid);
+}

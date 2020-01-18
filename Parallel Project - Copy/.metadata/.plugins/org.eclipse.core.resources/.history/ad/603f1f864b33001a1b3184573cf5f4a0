@@ -1,0 +1,19 @@
+package com.capgemini.forestmanagementspringrest.services;
+
+import com.capgemini.forestmanagementhibernate.bean.Admin;
+import com.capgemini.forestmanagementhibernate.dao.AdminDAO;
+import com.capgemini.forestmanagementhibernate.factory.AdminFactory;
+
+
+public class AdminServicesImpl implements AdminServices{
+	AdminDAO dao=AdminFactory.instanceOfAdminDAOImpl();
+
+	@Override
+	public boolean login(int id, String password) {
+		
+		return dao.login(id,password);
+	}
+
+	
+
+}

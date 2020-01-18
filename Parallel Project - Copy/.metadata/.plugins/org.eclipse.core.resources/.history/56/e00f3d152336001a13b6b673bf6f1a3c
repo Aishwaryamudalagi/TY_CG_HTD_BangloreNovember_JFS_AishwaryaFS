@@ -1,0 +1,83 @@
+package com.capgemini.forestmanagementspringrest.dao;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+import javax.persistence.PersistenceUnit;
+
+import org.springframework.stereotype.Repository;
+
+import com.capgemini.forestmanagementspringrest.dto.Customer;
+import com.capgemini.forestmanagementspringrest.dto.Order;
+import com.capgemini.forestmanagementspringrest.exceptions.DuplicateEntryException;
+@Repository
+public class OrderDAOImpl implements OrderDAO{
+	@PersistenceUnit
+	EntityManagerFactory entityManagerFactory;
+
+	@Override
+	public boolean addOrder(Order bean) {
+		EntityManager entitymanager=null;
+		EntityTransaction transaction=null;
+		try {
+		entitymanager= entityManagerFactory.createEntityManager();
+		transaction=entitymanager.getTransaction();
+		transaction.begin();
+		entitymanager.persist(bean);
+		transaction.commit();
+		} catch(Exception e)
+		{
+			
+			transaction.rollback();
+			throw new DuplicateEntryException("Id is repeated");
+			
+		}
+		
+		entitymanager.close();
+		return true;
+	}
+	@Override
+	public boolean deleteOrder(int orderNo) {
+		Boolean flag=false;
+		try
+		{
+			EntityManagerFactory entityManagerFactory=Persistence.createEntityManagerFactory("Test");
+			EntityManager entityManager=entityManagerFactory.createEntityManager();
+			EntityTransaction transaction=entityManager.getTransaction();
+			transaction.begin();
+			Order order=entityManager.find(Order.class, orderNo);
+			entityManager.remove(order);
+			entityManager.getTransaction().commit();
+			entityManager.close();
+			flag=true;
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			
+		}
+		return flag;
+	}
+	@Override
+	public Order getOrder(int orderNo) {
+		EntityManager entityManager=entityManagerFactory.createEntityManager();
+		Order getOrder=entityManager.find(Order.class, orderNo);
+		return getOrder;
+	}
+
+	@Override
+	public List<Order> getOrders() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean updateOrder(int orderNo, int customerId, int productId, int haulierId, int deliveryDate) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+}

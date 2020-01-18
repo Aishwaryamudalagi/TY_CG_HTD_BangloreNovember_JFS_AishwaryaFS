@@ -1,0 +1,18 @@
+package com.capgemini.forestmanagementspringrest.dao;
+
+import java.util.List;
+
+import com.capgemini.forestmanagementspringrest.dto.Client;
+
+
+
+public interface ClientDAO {
+	public boolean addClient(Client bean);
+	public boolean deleteClient(String email);
+	public Client getClient(String email);
+	public List<Client> getClients();
+	
+	public boolean login(String email,String password);
+	boolean updateClient(String email, Client client);
+
+}

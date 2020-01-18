@@ -1,0 +1,149 @@
+package com.capgemini.forestmanagementsystem.controller;
+
+import java.util.List;
+import java.util.Scanner;
+
+import com.capgemini.forestmanagementsystem.factory.ClientFactory;
+import com.capgemini.forestrymanagementsystem.bean.ClientBean;
+import com.capgemini.forestrymanagementsystem.bean.CustomerBean;
+import com.capgemini.forestrymanagementsystem.dao.ClientDAO;
+import com.capgemini.forestrymanagementsystem.services.ClientServices;
+import com.capgemini.forestrymanagementsystem.validations.validations;
+
+public class ClientMain {
+	public static void main() {
+		ClientServices service=ClientFactory.instanceOfClientServices();
+		Scanner scanner = new Scanner(System.in);
+		while(true)
+		{
+			System.out.println("Press 1 to insert client data...");
+			System.out.println("Press 2 to delete client data...");
+			System.out.println("press 3 to search client data...");
+			System.out.println("Press 4 to get client data...");
+			System.out.println("Press 5 to modify data...");
+			System.out.println("Press 6 to home");
+
+			int choice=scanner.nextInt();
+	    	switch(choice)
+			{
+			case 1 :ClientBean bean= new ClientBean();
+			boolean emailmatcher=true;
+			while(emailmatcher==true) {
+				System.out.println("Enter Email Id");
+				String email=scanner.next();
+				if(validations.validEmail(email)) {
+					emailmatcher=false;
+					bean.setEmail(email);
+				}
+				else {
+					System.err.println("Provide proper email id");
+				}
+			}
+			boolean pswd=true;
+			while(pswd==true) {
+				System.out.println("Enter Password,Password should contain atleast 1 capital letter and 1 special character");
+				String password=scanner.next();
+				if(validations.passwordValid(password)) {
+					pswd=false;
+					bean.setPassword(password);
+				}
+				else {
+					System.err.println("Provide proper Password");
+				}
+			}
+			
+				
+				boolean check= service.addClient(bean);
+				if(check)
+				{
+					System.out.println("Client added to list");
+				}
+				else
+				{
+					System.err.println("Client couldnt be added to list");
+				}
+			
+				break;
+			case 2 :System.out.println("Enter the client email to delete");
+			String email=scanner.next();
+			boolean checks=service.deleteClient(email);
+			if(checks)
+			{
+				System.out.println("Client deleted...");
+			}
+			else
+			{
+				System.err.println("Client couldnt be deleted...");
+			}
+			break;
+			case 3 :
+				System.out.println("Enter email to search...");
+				String clientEmail = scanner.next();
+				ClientBean clientbean = service.getClient(clientEmail);
+				if(clientbean!=null)
+				{
+					System.out.println(clientbean.getEmail());
+					System.out.println(clientbean.getPassword());
+				}
+				else
+				{
+					System.err.println("Client not found....");
+				}
+				break;
+			case 4 :
+				List<ClientBean> status=service.getClients();
+				if(status!=null)
+				{
+					System.out.println("Client details are...");
+					System.out.println(status);
+				}
+				else
+				{
+					System.err.println("Client details couldnt be displayed...");
+				}
+				break;
+				
+			case 5 :
+				ClientBean client= new ClientBean();
+				String emails=null;
+				boolean emailmatches=true;
+				while(emailmatches==true) {
+					System.out.println("Enter Email Id");
+					emails=scanner.next();
+					if(validations.validEmail(emails)) {
+						emailmatches=false;
+						client.setEmail(emails);
+					}
+					else {
+						System.err.println("Provide proper email id");
+					}
+				}
+				boolean pswds=true;
+				while(pswds==true) {
+					System.out.println("Enter Password,Password should contain atleast 1 capital letter and 1 special character");
+					String password=scanner.next();
+					if(validations.passwordValid(password)) {
+						pswd=false;
+						client.setPassword(password);
+					}
+					else {
+						System.err.println("Provide proper Password");
+					}
+				}
+				boolean flag=service.modify(emails,client);
+				if(flag) 
+				{
+					System.out.println("Client modified...");
+				}
+				else
+				{
+					System.err.println("Client couldnt be modified...");
+				}
+				
+			case 6 :Home.main();
+			break;
+
+			}
+			}
+		}
+		}

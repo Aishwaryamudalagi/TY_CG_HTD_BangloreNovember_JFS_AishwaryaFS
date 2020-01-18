@@ -1,0 +1,65 @@
+package com.capgemini.forestmanagementspringrest.dao;
+
+import java.io.FileReader;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.List;
+import java.util.Properties;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+
+import com.capgemini.forestmanagementspringrest.dto.Admin;
+
+public class AdminDAOImpl implements AdminDAO{
+	EntityManagerFactory entityManagerFactory=Persistence.createEntityManagerFactory("Test");
+	Admin bean=new Admin();
+
+	@Override
+	public boolean login(int id, String password) {
+		EntityManager entityManager=entityManagerFactory.createEntityManager();
+		EntityTransaction transaction=entityManager.getTransaction();
+		String jpql="from Admin where id=:adminId and password=:password";
+		Query query=entityManager.createQuery(jpql);
+		query.setParameter("adminId", id);
+		query.setParameter("password", password);
+		try
+		{
+			List<Admin> list=query.getResultList();
+			if(list!=null && list.size()>0) {
+				return true;
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		entityManager.close();
+		return false;
+	}
+
+	@Override
+	public boolean register(Admin admin) {
+		EntityManager entityManager=entityManagerFactory.createEntityManager();
+		EntityTransaction transaction=entityManager.getTransaction();
+		try {
+			transaction.begin();
+			entityManager.persist(admin);
+			transaction.commit();
+			return true;
+		}
+		catch(Exception e)
+		{
+			throw new DuplicateEntryException("Admin with same acoount already exists!")
+		}
+		
+		return false;
+	}
+	
+}
+	

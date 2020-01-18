@@ -1,0 +1,133 @@
+package com.capgemini.forestmanagementspringrest.dao;
+
+import java.io.FileReader;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+
+import com.capgemini.forestmanagementspringrest.dto.Haulier;
+public class HaulierDAOImpl implements HaulierDAO{
+	
+
+	@Override
+	public boolean addHaulier(Haulier bean) {
+		EntityManager entitymanager=null;
+		EntityTransaction transaction=null;
+		boolean flag1=false;
+		try {
+		EntityManagerFactory entityManagerFactory=Persistence.createEntityManagerFactory("Test");
+		entitymanager= entityManagerFactory.createEntityManager();
+		transaction=entitymanager.getTransaction();
+		transaction.begin();
+		entitymanager.persist(bean);
+		System.out.println("Record saved...");
+		transaction.commit();
+		flag1=true;
+		} catch(Exception e)
+		{
+			e.printStackTrace();
+			transaction.rollback();
+			//System.out.println("Duplicate entry for primary key!!");
+			
+		}
+		
+		entitymanager.close();
+		return flag1;
+	}
+
+	@Override
+	public boolean deleteHaulier(int haulierId) {
+		Boolean flag=false;
+		try
+		{
+			EntityManagerFactory entityManagerFactory=Persistence.createEntityManagerFactory("Test");
+			EntityManager entityManager=entityManagerFactory.createEntityManager();
+			EntityTransaction transaction=entityManager.getTransaction();
+			transaction.begin();
+			Haulier haulier=entityManager.find(Haulier.class, haulierId);
+			entityManager.remove(haulier);
+			entityManager.getTransaction().commit();
+			entityManager.close();
+			flag=true;
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			
+		}
+		
+		return false;
+	}
+
+	@Override
+	public boolean updateHaulier(int haulierId, Haulier bean) {
+		EntityTransaction transaction=null;
+		try
+		{
+		EntityManagerFactory entityManagerFactory=Persistence.createEntityManagerFactory("Test");
+		EntityManager entityManager=entityManagerFactory.createEntityManager();
+		transaction=entityManager.getTransaction();
+		transaction.begin();
+		Haulier hauliers=entityManager.find(Haulier.class, haulierId);
+		hauliers.setHaulierName(bean.getHaulierName());
+		hauliers.setEmail(bean.getEmail());
+		hauliers.setTelephoneNumber(bean.getTelephoneNumber());
+		transaction.commit();
+		return true;
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			transaction.rollback();
+		}
+		
+		return false;
+	}
+	@Override
+	public Haulier getHaulier(int haulierid) {
+		EntityManagerFactory entityManagerFactory=Persistence.createEntityManagerFactory("Test");
+		EntityManager entityManager=entityManagerFactory.createEntityManager();
+		Haulier getHaulier=entityManager.find(Haulier.class, haulierid);
+		return getHaulier;
+		
+	}
+
+	@Override
+	public List<Haulier> getHauliers() {
+		EntityManager entityManager=null;
+		EntityTransaction transaction=null;
+		try
+		{
+			EntityManagerFactory entityManagerFactory=Persistence.createEntityManagerFactory("Test");
+			entityManager=entityManagerFactory.createEntityManager();
+			transaction=entityManager.getTransaction();
+			transaction.begin();
+			String jpql="from haulier";
+			Query query=entityManager.createQuery(jpql);
+			List<Haulier> list=query.getResultList();
+			return list;
+		}
+		catch(Exception e)
+		{
+			transaction.rollback();
+		}
+		entityManager.close();
+		
+			
+		return null;
+	}
+
+	
+	}
+

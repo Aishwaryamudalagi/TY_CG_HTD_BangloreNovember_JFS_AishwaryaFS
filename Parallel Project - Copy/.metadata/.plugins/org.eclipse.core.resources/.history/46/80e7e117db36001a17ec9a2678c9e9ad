@@ -1,0 +1,15 @@
+package com.capgemini.forestmanagementspringrest.exceptions;
+
+public class DuplicateEntryException extends RuntimeException {
+	String message;
+	@Override
+	public String toString()
+	{
+		return message;
+	}
+	public DuplicateEntryException(String msg)
+	{
+		this.message=message;
+	}
+
+}

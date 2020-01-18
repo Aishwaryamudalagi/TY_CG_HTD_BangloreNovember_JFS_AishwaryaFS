@@ -1,0 +1,260 @@
+package com.capgemini.forestmanagementjdbc.controller;
+
+import java.util.List;
+import java.util.Scanner;
+
+import com.capgemini.forestmanagementjdbc.bean.Customer;
+import com.capgemini.forestmanagementjdbc.exception.DuplicateEntryException;
+import com.capgemini.forestmanagementjdbc.factory.CustomerFactory;
+import com.capgemini.forestmanagementjdbc.services.CustomerServices;
+import com.capgemini.forestmanagementjdbc.validations.validations;
+
+public class CustomerMain {
+	public static void main() {
+		CustomerServices service = CustomerFactory.instanceOfCustomerServices();
+		Customer bean = new Customer();
+		Scanner sc = new Scanner(System.in);
+		while (true) {
+			System.out.println("Press 1 to insert customer data...");
+			System.out.println("Press 2 to delete customer data...");
+			System.out.println("press 3 to update customer data...");
+			System.out.println("Press 4 to get list of all the customers...");
+			System.out.println("Press 5 to home...");
+			int choice = sc.nextInt();
+			switch (choice) {
+			case 1:
+				Customer customer = new Customer();
+				boolean variable = true;
+				while (variable == true) {
+					System.out.println("Enter Customer Id");
+					String id = sc.next();
+					if (validations.isNumber(id)) {
+						int customerId = Integer.parseInt(id);
+						variable = false;
+						customer.setCustomerid(customerId);
+					} else {
+						System.err.println("Id should contain numbers only");
+					}
+				}
+				boolean matcher = true;
+				while (matcher == true) {
+					System.out.println("Enter customer Name,1st character should be capital");
+					String name = sc.next();
+					if (validations.StringOnlyAlphabet(name)) {
+						matcher = false;
+						customer.setCustomerName(name);
+					} else {
+						System.err.println("Enter the name is correct format");
+					}
+				}
+				boolean addressmatcher = true;
+				while (addressmatcher == true) {
+					System.out.println("Enter Street Address1");
+					String address1 = sc.next();
+					if (validations.validAddress(address1)) {
+						addressmatcher = false;
+						customer.setStreetAddress(address1);
+					} else {
+						System.err.println("Enter Address1 in proper format");
+					}
+
+				}
+				boolean addressmatch = true;
+				while (addressmatch == true) {
+					System.out.println("Enter Street Address2");
+					String address2 = sc.next();
+					if (validations.validAddress(address2)) {
+						addressmatch = false;
+						customer.setStreetAddress(address2);
+					} else {
+						System.err.println("Enter Address2 in proper format");
+					}
+				}
+				boolean townmatch = true;
+				while (townmatch == true) {
+					System.out.println("Enter Town,1st character should be capital");
+					String town = sc.next();
+					if (validations.StringOnlyAlphabet(town)) {
+						townmatch = false;
+						customer.setTown(town);
+					} else {
+						System.err.println("Enter the town is correct format");
+					}
+				}
+				boolean postalcode = true;
+				while (postalcode == true) {
+					System.out.println("Enter Postal code");
+					String code = sc.next();
+					if (validations.isValidPostalCode(code)) {
+						postalcode = false;
+						customer.setPostalCode(code);
+					} else {
+						System.err.println("Provide proper postal code");
+					}
+				}
+				boolean emailmatcher = true;
+				while (emailmatcher == true) {
+					System.out.println("Enter Email Id");
+					String email = sc.next();
+					if (validations.validEmail(email)) {
+						emailmatcher = false;
+						customer.setEmail(email);
+					} else {
+						System.err.println("Provide proper email id");
+					}
+				}
+				boolean phone = true;
+				while (phone == true) {
+					System.out.println("Enter mobile number");
+					String number = sc.next();
+					if (validations.validTelephone(number)) {
+						long teleno = Long.parseLong(number);
+						phone = false;
+						customer.setTelePhoneno(teleno);
+					} else {
+						System.err.println("Provide proper Phone number");
+					}
+				}
+
+				boolean check = false;
+				try {
+					check = service.addCustomer(bean);
+				} catch (DuplicateEntryException e) {
+					System.err.println(e.toString());
+				}
+				if (check) {
+					System.out.println("Customer added to list");
+				}
+
+				break;
+			case 2:
+				System.out.println("Enter the customer id to delete");
+				int customerid1 = sc.nextInt();
+				boolean check1 = service.deleteCustomer(customerid1);
+				if (check1) {
+					System.out.println("Customer deleted...");
+				} else {
+					System.out.println("Customer couldnt be deleted!!");
+				}
+
+				break;
+			case 3:
+				Customer customers = new Customer();
+				String id=null;
+				boolean variables = true;
+				while (variables == true) {
+					System.out.println("Enter Customer Id");
+					id = sc.next();
+					if (validations.isNumber(id)) {
+						int customerId = Integer.parseInt(id);
+						variables = false;
+						customers.setCustomerid(customerId);
+					} else {
+						System.err.println("Id should contain numbers only");
+					}
+				}
+				boolean matches = true;
+				while (matches == true) {
+					System.out.println("Enter customer Name,1st character should be capital");
+					String name = sc.next();
+					if (validations.StringOnlyAlphabet(name)) {
+						matcher = false;
+						customers.setCustomerName(name);
+					} else {
+						System.err.println("Enter the name is correct format");
+					}
+				}
+				boolean addressmatches = true;
+				while (addressmatches == true) {
+					System.out.println("Enter Street Address1");
+					String address1 = sc.next();
+					if (validations.validAddress(address1)) {
+						addressmatches = false;
+						customers.setStreetAddress(address1);
+					} else {
+						System.err.println("Enter Address1 in proper format");
+					}
+
+				}
+				boolean addressmatchers = true;
+				while (addressmatchers == true) {
+					System.out.println("Enter Street Address2");
+					String address2 = sc.next();
+					if (validations.validAddress(address2)) {
+						addressmatch = false;
+						customer.setStreetAddress(address2);
+					} else {
+						System.err.println("Enter Address2 in proper format");
+					}
+				}
+				boolean townmatch = true;
+				while (townmatch == true) {
+					System.out.println("Enter Town,1st character should be capital");
+					String town = sc.next();
+					if (validations.StringOnlyAlphabet(town)) {
+						townmatch = false;
+						customer.setTown(town);
+					} else {
+						System.err.println("Enter the town is correct format");
+					}
+				}
+				boolean postalcode = true;
+				while (postalcode == true) {
+					System.out.println("Enter Postal code");
+					String code = sc.next();
+					if (validations.isValidPostalCode(code)) {
+						postalcode = false;
+						customer.setPostalCode(code);
+					} else {
+						System.err.println("Provide proper postal code");
+					}
+				}
+				boolean emailmatcher = true;
+				while (emailmatcher == true) {
+					System.out.println("Enter Email Id");
+					String email = sc.next();
+					if (validations.validEmail(email)) {
+						emailmatcher = false;
+						customer.setEmail(email);
+					} else {
+						System.err.println("Provide proper email id");
+					}
+				}
+				boolean phone = true;
+				while (phone == true) {
+					System.out.println("Enter mobile number");
+					String number = sc.next();
+					if (validations.validTelephone(number)) {
+						long teleno = Long.parseLong(number);
+						phone = false;
+						customer.setTelePhoneno(teleno);
+					} else {
+						System.err.println("Provide proper Phone number");
+					}
+				}
+
+				boolean check11 = service.updateCustomer(id, customer);
+				if (check11) {
+					System.out.println("Customer modified...");
+				} else {
+					System.err.println("Customer Id doesnot exist...");
+				}
+
+				break;
+			case 4:
+				List<Customer> l1 = service.getCustomers();
+				if (l1 != null) {
+					for (Customer customer1 : l1) {
+						System.out.println(customer1);
+					}
+				}
+				break;
+			case 5:
+				Home.main();
+				break;
+
+			}
+		}
+	}
+
+}

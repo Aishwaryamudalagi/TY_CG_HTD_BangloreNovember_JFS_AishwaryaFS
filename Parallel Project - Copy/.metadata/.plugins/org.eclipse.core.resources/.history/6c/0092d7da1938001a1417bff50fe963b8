@@ -1,0 +1,7 @@
+package com.capgemini.forestrymanagementsystem.services;
+
+public interface AdminServices {
+
+	public boolean login(String name,String password) 
+
+}

@@ -1,0 +1,15 @@
+package com.capgemini.forestmanagementspringrest.services;
+
+import java.util.List;
+
+import com.capgemini.forestmanagementhibernate.bean.Contract;
+
+
+public interface ContractServices {
+	public boolean addContract(Contract bean);
+	public boolean deleteContract(int contractno);
+	//public Customer getCustomer(int customerid);
+	public List<Contract> getContract();
+	public boolean updateContract(int contractno,Contract bean);
+	public Contract getContract(int contractno);
+}

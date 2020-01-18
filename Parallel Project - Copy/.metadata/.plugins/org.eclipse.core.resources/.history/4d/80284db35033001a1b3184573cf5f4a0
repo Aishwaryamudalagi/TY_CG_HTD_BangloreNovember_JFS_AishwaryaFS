@@ -1,0 +1,15 @@
+package com.capgemini.forestmanagementspringrest.services;
+
+
+public class AdminServicesImpl implements AdminServices{
+	
+
+	@Override
+	public boolean login(int id, String password) {
+		
+		return dao.login(id,password);
+	}
+
+	
+
+}

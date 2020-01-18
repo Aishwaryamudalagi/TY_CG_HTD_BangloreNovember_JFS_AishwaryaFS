@@ -1,0 +1,70 @@
+package com.capgemini.forestrymanagementsystem.validations;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class validations {
+		public static boolean isNumber(String id) {
+			String regex=("[0-9][0-9]*");
+			Pattern pattern=Pattern.compile(regex);
+			Matcher matcher=pattern.matcher((CharSequence) id);
+			return matcher.matches();
+		}
+		
+		public static boolean StringOnlyAlphabet(String s) {
+			return ((s!=null)&&(!s.contentEquals(""))&&(s.matches("^[A-Z][a-z]*")));
+		}
+		
+		public static boolean validAddress(String address) {
+			String regexp=("\\\\d{1,5}\\\\s\\\\w.\\\\s(\\\\b\\\\w*\\\\b\\\\s){1,2}\\\\w*\\\\.");
+			Pattern pattern=Pattern.compile(regexp);
+			Matcher matcher =pattern.matcher(address);
+			return (matcher.equals(matcher));
+		}
+		public static boolean validEmail(String email) {
+			String regularexp=("^(.+)@(.+)$");
+			Pattern pattern=Pattern.compile(regularexp);
+			if(email==null) 
+				return false;
+			else
+				return pattern.matcher(email).matches();
+		}
+		public static boolean validTelephone(String s) {
+			String regexpression=("(0/91)?[6-9][0-9]{9}");
+			Pattern pattern=Pattern.compile(regexpression);
+			Matcher matcher=pattern.matcher(s);
+			return (matcher.find()&&matcher.group().equals(s));
+		}
+		public static boolean isValidPostalCode(String postalCode) {
+			String regexps=("^\\d{3}\\s?\\d{3}$");
+			return ((postalCode!=null)&&(!postalCode.equals(""))&&(postalCode.matches(regexps)));
+			}
+		public static boolean dateValid(String s) {
+			String regular="^(1[0-2]|0[1-9])/(3[01]|[12][0-9]|0[1-9] {4}$";
+			Pattern pattern=Pattern.compile(regular);
+			Matcher matcher =pattern.matcher((CharSequence) s);
+			return matcher.matches();
+			}
+		public static boolean dayValid(String weekDay) {
+			if(weekDay.equalsIgnoreCase("Monday")|| weekDay.equalsIgnoreCase("monday")
+			||weekDay.equalsIgnoreCase("Tuesday")|| weekDay.equalsIgnoreCase("tuesday")
+			||weekDay.equalsIgnoreCase("Wednesday")|| weekDay.equalsIgnoreCase("wednesday")
+			||weekDay.equalsIgnoreCase("Thursday")|| weekDay.equalsIgnoreCase("thursday")
+			||weekDay.equalsIgnoreCase("Friday")|| weekDay.equalsIgnoreCase("friday")
+			||weekDay.equalsIgnoreCase("Saturday")|| weekDay.equalsIgnoreCase("satusday")
+			||weekDay.equalsIgnoreCase("Sunday")|| weekDay.equalsIgnoreCase("sunday")) {
+				return true;
+			}else {
+				System.out.println("Invalid");
+				return false;
+			}
+		}
+		public static boolean passwordValid(String password) {
+			String passexp="((?=.*[a-z])(?=.*\\d)(?=.*[A-Z])(?=.*[@#$%!]).{8,40})";
+			Pattern pattern=Pattern.compile(passexp);
+			Matcher matcher=pattern.matcher((CharSequence) passexp);
+			return matcher.matches();
+			}
+	}
+
+
+

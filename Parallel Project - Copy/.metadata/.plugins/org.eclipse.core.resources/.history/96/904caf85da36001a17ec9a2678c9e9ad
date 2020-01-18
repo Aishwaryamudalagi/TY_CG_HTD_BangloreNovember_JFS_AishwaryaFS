@@ -1,0 +1,19 @@
+package com.capgemini.forestmanagementspringrest.controller;
+
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import com.capgemini.forestmanagementspringrest.dto.CustomerResponse;
+import com.capgemini.forestmanagementspringrest.dto.ProductResponse;
+import com.capgemini.forestmanagementspringrest.exceptions.DuplicateEntryException;
+@RestControllerAdvice
+public class CustomerControllerAdvice {
+	@ExceptionHandler(DuplicateEntryException.class)
+	public CustomerResponse authException(Exception e) {
+		CustomerResponse response = new CustomerResponse();
+		response.setStatusCode(501);
+		response.setDescription("Exception");
+		response.setMessage(e.getMessage());
+		return response;
+	}
+}

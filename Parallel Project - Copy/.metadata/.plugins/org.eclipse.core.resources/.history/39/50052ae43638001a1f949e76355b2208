@@ -1,0 +1,185 @@
+package com.capgemini.forestmanagementsystem.controller;
+
+import java.util.List;
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import com.capgemini.forestrymanagementsystem.bean.CustomerBean;
+import com.capgemini.forestrymanagementsystem.bean.ProductBean;
+
+import com.capgemini.forestrymanagementsystem.dao.ProductDAO;
+import com.capgemini.forestrymanagementsystem.dao.ProductDAOImpl;
+import com.capgemini.forestrymanagementsystem.services.ForestServices;
+import com.capgemini.forestrymanagementsystem.services.ProductServices;
+import com.capgemini.forestrymanagementsystem.validations.validations;
+import com.capgemini.forestmanagementsystem.factory.CustomerFactory;
+import com.capgemini.forestmanagementsystem.factory.ProductFactory;
+
+
+public class ProductMain 
+{
+	public static void main(String[] args) {
+		ProductServices service=ProductFactory.instanceOfProductServices();
+		Scanner scanner = new Scanner(System.in);
+		while(true)
+		{
+		System.out.println("Press 1 to insert Product data...");
+		System.out.println("Press 2 to delete Product data...");
+		System.out.println("press 3 to modify Product Data....");
+		System.out.println("press 4 to search Product Data...");
+		System.out.println("press 5 to get all Product Data...");
+		System.out.println("Press 6 for home");
+		int choice=scanner.nextInt();
+		switch(choice)
+		{
+		case 1 :ProductBean bean= new ProductBean(); 
+		boolean productmatcher=true;
+		while(productmatcher==true) {
+			System.out.println("Enter Product Id");
+			String identifier=scanner.next();
+			if(validations.isNumber(identifier)) {
+				int productId=Integer.parseInt(identifier);
+				productmatcher=false;
+				bean.setProductid(productId);
+			} else {
+				System.err.println("Id should contain numbers only");
+			}
+		}
+		boolean matcher=true;
+		while(matcher==true) {
+			System.out.println("Enter Product Name,1st character should be capital");
+			String name=scanner.next();
+			if(validations.StringOnlyAlphabet(name)) {
+				matcher=false;
+				bean.setProductname(name);
+			}
+			else {
+				System.err.println("Enter the name is correct format");
+			}
+		}
+		
+		boolean datematcher=true;
+		while(datematcher==true) {
+			System.out.println("Enter Delivery date");
+			String delivery=scanner.next();
+			if(validations.dateValid(delivery)) {
+				bean.setDeliverydate(delivery);
+				datematcher=false;
+			} else {
+				System.err.println("Provide date in proper format");
+			}
+		}
+		
+		boolean check= service.addProduct(bean);
+		if(check)
+		{
+			System.out.println("Product added to list");
+		}
+		else
+		{
+			System.out.println("Product is repeated");
+		}
+		break;
+		case 2 :System.out.println("Enter the product id to delete");
+		int products=scanner.nextInt();
+		boolean variable=service.deleteProduct(products);
+		if(variable)
+		{
+			System.out.println("Product deleted...");
+		}
+		else
+		{
+			System.out.println("Product couldnt be deleted...");
+		}
+
+	break;
+	
+		case 3: 
+			ProductBean product= new ProductBean();
+			int productId=0;
+			boolean productmatches=true;
+			while(productmatches==true) {
+				System.out.println("Enter Product Id");
+				String identifier=scanner.next();
+				if(validations.isNumber(identifier)) {
+					productId=Integer.parseInt(identifier);
+					productmatches=false;
+					product.setProductid(productId);
+				} else {
+					System.err.println("Id should contain numbers only");
+				}
+			}
+			boolean matches=true;
+			while(matches==true) {
+				System.out.println("Enter Product Name,1st character should be capital");
+				String name=scanner.next();
+				if(validations.StringOnlyAlphabet(name)) {
+					matches=false;
+					product.setProductname(name);
+				}
+				else {
+					System.err.println("Enter the name is correct format");
+				}
+			}
+			
+			boolean datematches=true;
+			while(datematches==true) {
+				System.out.println("Enter Delivery date");
+				String delivery=scanner.next();
+				if(validations.dateValid(delivery)) {
+					datematches=false;
+					product.setDeliverydate(delivery);
+				} else {
+					System.err.println("Provide date in proper format");
+				}
+			}	
+		boolean flag=service.modify(productId,product);
+		if(flag) 
+		{
+			System.out.println("product modidfied...");
+		}
+		else
+		{
+			System.out.println("product couldnt be modified...");
+		}
+		break;
+		case 5 : 
+			
+			List<ProductBean> status=service.getProducts();
+			if(status!=null)
+			{
+				System.out.println("Product details are...");
+				System.out.println(status);
+			}
+			else
+			{
+				System.out.println("Product details couldnt be displayed...");
+			}
+			break;
+		case 4 :
+			System.out.println("Enter id to serach...");
+			int id2 = scanner.nextInt();
+			ProductBean productbean = service.getProduct(id2);
+			if(productbean!=null)
+			{
+				
+				System.out.println(productbean.getProductid());
+				System.out.println(productbean.getProductname());
+				System.out.println(productbean.getDeliverydate());
+				
+			}
+			else
+			{
+				System.out.println("Product not found....");
+			}
+		break;
+		
+		case 6 : Home.main();
+		break;
+		}
+		}
+		
+		}	
+
+}

@@ -1,0 +1,15 @@
+package com.capgemini.forestrymanagementsystem.dao;
+
+import java.util.List;
+
+import com.capgemini.forestrymanagementsystem.bean.CustomerBean;
+
+public interface ForestDAO {
+	public boolean addCustomer(CustomerBean bean);
+	public boolean deleteCustomer(int customerid);
+	public CustomerBean getCustomer(int customerid);
+	public List<CustomerBean> getCustomers();
+	public boolean modify(int customerId);
+	
+
+}

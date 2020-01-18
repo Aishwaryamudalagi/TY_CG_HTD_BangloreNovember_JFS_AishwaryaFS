@@ -1,0 +1,5 @@
+package com.capgemini.forestmanagementspringrest.dto;
+
+public class OrderResponse {
+
+}

@@ -1,0 +1,127 @@
+package com.capgemini.forestmanagementspringrest.dao;
+
+import java.io.FileReader;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+import javax.persistence.PersistenceUnit;
+import javax.persistence.Query;
+
+import org.springframework.stereotype.Repository;
+
+import com.capgemini.forestmanagementspringrest.dto.Product;
+import com.capgemini.forestmanagementspringrest.exceptions.DuplicateEntryException;
+
+@Repository
+public class ProductDAOImpl implements ProductDAO{
+ 
+	@PersistenceUnit
+	EntityManagerFactory entityManagerFactory;
+	
+	@Override
+	public boolean addProduct(Product product) {
+		EntityManager entitymanager=null;
+		EntityTransaction transaction=null;
+		//boolean flag=false;
+		try {
+		EntityManagerFactory entityManagerFactory=Persistence.createEntityManagerFactory("Test");
+		entitymanager= entityManagerFactory.createEntityManager();
+		transaction=entitymanager.getTransaction();
+		transaction.begin();
+		entitymanager.persist(product);
+		//System.out.println("Record saved...");
+		transaction.commit();
+		//flag=true;
+		//return flag;
+		} catch(Exception e)
+		{
+			System.out.println("Product is repeated");
+			//transaction.rollback();
+		}
+		entitymanager.close();
+		//throw new DuplicateEntryException("Duplicate entry for primary key!");
+		return true;
+	}
+
+	@Override
+	public boolean deleteProduct(int productId) {
+		Boolean flag=false;
+		try
+		{
+			EntityManagerFactory entityManagerFactory=Persistence.createEntityManagerFactory("Test");
+			EntityManager entityManager=entityManagerFactory.createEntityManager();
+			EntityTransaction transaction=entityManager.getTransaction();
+			transaction.begin();
+			Product product=entityManager.find(Product.class, productId);
+			entityManager.remove(product);
+			entityManager.getTransaction().commit();
+			entityManager.close();
+			flag=true;
+		}
+		catch(Exception e)
+		{
+			System.out.println("Product is not present");
+		}	
+		return true;
+	}
+
+	@Override
+	public boolean updateProduct(int productid,String product) {
+		
+		
+		return false;
+		
+		
+	}
+
+	@Override
+	public Product getProduct(int productid) {
+		EntityManagerFactory entityManagerFactory=Persistence.createEntityManagerFactory("Test");
+		EntityManager entityManager=entityManagerFactory.createEntityManager();
+		Product getProduct=entityManager.find(Product.class, productid);
+		return getProduct;
+	}
+
+	@Override
+	public List<Product> getProducts() {
+		EntityManager entityManager=null;
+		EntityTransaction transaction=null;
+		try
+		{
+			EntityManagerFactory entityManagerFactory=Persistence.createEntityManagerFactory("Test");
+			entityManager=entityManagerFactory.createEntityManager();
+			transaction=entityManager.getTransaction();
+			transaction.begin();
+			String jpql="from product";
+			Query query=entityManager.createQuery(jpql);
+			List<Product> list=query.getResultList();
+			return list;
+		}
+		catch(Exception e)
+		{
+			transaction.rollback();
+		}
+		entityManager.close();
+		return null;
+	}
+
+
+	/*@Override
+	public List<Product> getProduct() {
+		
+			
+		return null;
+	}*/
+
+
+}

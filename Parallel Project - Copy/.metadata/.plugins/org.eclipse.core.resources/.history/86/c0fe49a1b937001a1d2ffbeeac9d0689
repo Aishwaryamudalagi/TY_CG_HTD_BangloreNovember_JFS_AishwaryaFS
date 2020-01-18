@@ -1,0 +1,18 @@
+package com.capgemini.forestmanagementsystem.factory;
+
+import com.capgemini.forestrymanagementsystem.dao.OrderDAO;
+import com.capgemini.forestrymanagementsystem.dao.OrderDAOImpl;
+import com.capgemini.forestrymanagementsystem.services.OrderServices;
+import com.capgemini.forestrymanagementsystem.services.OrderServicesImpl;
+
+public class OrderFactory {
+	public static OrderDAO getOrderDAO()
+	{
+		return new OrderDAOImpl();
+	}
+	public static OrderServices instanceOfOrderServices() {
+		OrderServices services = new OrderServicesImpl();
+		return services;
+	}
+
+}

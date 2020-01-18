@@ -1,0 +1,15 @@
+package com.capgemini.forestrymanagementsystem.services;
+
+import java.util.List;
+
+import com.capgemini.forestrymanagementsystem.bean.ClientBean;
+
+public interface ClientServices {
+	public boolean addClient(ClientBean bean);
+	public boolean deleteClient(String clientEmail);
+	public ClientBean getClient(String clientEmail);
+	public List<ClientBean> getClients();
+	public boolean modify(String clientEmail,Client client);
+	public boolean Clientlogin(String email,String password) ;
+
+}

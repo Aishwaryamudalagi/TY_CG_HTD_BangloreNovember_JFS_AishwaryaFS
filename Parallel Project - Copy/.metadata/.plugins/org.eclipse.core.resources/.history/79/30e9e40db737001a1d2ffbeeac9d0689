@@ -1,0 +1,44 @@
+package com.capgemini.forestrymanagementsystem.services;
+
+import java.util.List;
+
+import com.capgemini.forestmanagementsystem.factory.LandFactory;
+import com.capgemini.forestrymanagementsystem.bean.LandBean;
+import com.capgemini.forestrymanagementsystem.dao.LandDAO;
+
+
+public class LandServicesImpl implements LandServices{
+	LandDAO dao=LandFactory.instanceOfLandDAOImpl();
+
+
+	@Override
+	public boolean addLand(LandBean bean) {
+		
+		return dao.addLand(bean);
+	}
+
+	@Override
+	public boolean deleteLand(int id) {
+		
+		return dao.deleteLand(id);
+	}
+
+	@Override
+	public LandBean getLand(int id) {
+		
+		return dao.getLand(id);
+	}
+
+	@Override
+	public List<LandBean> getLands() {
+		
+		return dao.getLands();
+	}
+
+	@Override
+	public boolean modify(int id,LandBean land) {
+		
+		return dao.modify(id);
+	}
+
+}

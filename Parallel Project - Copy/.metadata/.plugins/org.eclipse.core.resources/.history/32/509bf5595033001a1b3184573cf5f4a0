@@ -1,0 +1,38 @@
+package com.capgemini.forestmanagementspringrest.services;
+
+import java.util.List;
+
+import com.capgemini.forestmanagementspringrest.dto.Land;
+
+public class LandServicesImpl implements LandServices{
+	
+
+	@Override
+	public boolean addLand(Land bean) {
+		
+		return dao.addLand(bean);
+	}
+
+	@Override
+	public boolean deleteLand(int landId) {
+		
+		return dao.deleteLand(landId);
+	}
+	  @Override 
+	  public List<Land> getLands() {
+	  
+	  return dao.getLands(); }
+	 
+	@Override
+	public boolean updateLand(int landID, Land bean) {
+		
+		return dao.updateLand(landID, bean);
+	}
+
+	@Override
+	public Land getLand(int landid) {
+		// TODO Auto-generated method stub
+		return dao.getLand(landid);
+	}
+
+}

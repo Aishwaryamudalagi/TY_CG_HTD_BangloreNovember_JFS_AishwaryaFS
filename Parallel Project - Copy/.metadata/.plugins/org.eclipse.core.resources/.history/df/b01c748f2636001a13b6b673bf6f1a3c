@@ -1,0 +1,58 @@
+package com.capgemini.forestmanagementspringrest.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.capgemini.forestmanagementspringrest.dto.Haulier;
+import com.capgemini.forestmanagementspringrest.dto.HaulierResponse;
+import com.capgemini.forestmanagementspringrest.dto.Order;
+import com.capgemini.forestmanagementspringrest.dto.OrderResponse;
+import com.capgemini.forestmanagementspringrest.services.OrderServices;
+
+
+
+@RestController
+public class OrderController {
+	@Autowired
+	private OrderServices service;
+	@PostMapping(path = "/add-order", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public OrderResponse addOrder(@RequestBody Order order) {
+		OrderResponse response = new OrderResponse();
+		if (service.addOrder(order)){
+			response.setStatusCode(201);
+			response.setMessage("Success");
+			response.setDescription("Order added");
+		} 
+		return response;
+	}
+	@DeleteMapping(path = "/delete-order/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public OrderResponse deleteOrder(@PathVariable("id") int orderNo) {
+		OrderResponse response = new OrderResponse();
+		if (service.deleteOrder(orderNo)) {
+			response.setStatusCode(201);
+			response.setMessage("Success");
+			response.setDescription("Haulier deleted");
+		} 
+		return response;
+	}
+	@PutMapping(path = "/modify-order", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public HaulierResponse updateHaulier(@RequestBody Haulier haulier) {
+		HaulierResponse response = new HaulierResponse();
+		if (service.updateHaulier(haulier.getHaulierId(),haulier.getHaulierName(),haulier.getEmail(),haulier.getTelephoneNumber())) {
+			response.setStatusCode(201);
+			response.setMessage("Success");
+			response.setDescription("Haulier updated");
+		} else {
+			response.setStatusCode(401);
+			response.setMessage("Failure");
+			response.setDescription("Haulier not found");
+		}
+		return response;
+	}
+}

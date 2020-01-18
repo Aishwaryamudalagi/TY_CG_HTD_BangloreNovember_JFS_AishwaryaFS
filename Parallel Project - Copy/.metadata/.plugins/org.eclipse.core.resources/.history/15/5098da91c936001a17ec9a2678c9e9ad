@@ -1,0 +1,10 @@
+package com.capgemini.forestmanagementspringrest.services;
+
+import com.capgemini.forestmanagementspringrest.dto.Admin;
+
+public interface AdminServices {
+	public boolean register(Admin admin);
+	public Admin login(Admin admin);
+	
+
+}

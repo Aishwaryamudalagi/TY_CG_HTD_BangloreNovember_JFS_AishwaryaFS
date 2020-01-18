@@ -1,0 +1,264 @@
+package com.capgemini.forestmanagementjdbc.controller;
+
+import java.util.List;
+import java.util.Scanner;
+
+import com.capgemini.forestmanagementjdbc.bean.Customer;
+import com.capgemini.forestmanagementjdbc.exception.DuplicateEntryException;
+import com.capgemini.forestmanagementjdbc.factory.CustomerFactory;
+import com.capgemini.forestmanagementjdbc.services.CustomerServices;
+
+public class CustomerMain {
+	public static void main() {
+		CustomerServices service=CustomerFactory.instanceOfCustomerServices();
+		Customer bean=new Customer();
+		Scanner sc = new Scanner(System.in);
+		while(true)
+		{
+			System.out.println("Press 1 to insert customer data...");
+			System.out.println("Press 2 to delete customer data...");
+			System.out.println("press 3 to update customer data...");
+			System.out.println("Press 4 to get list of all the customers...");
+			System.out.println("Press 5 to home...");
+
+
+
+			int choice=sc.nextInt();
+			switch(choice)
+			{
+			case 1 : Customer bean1 = new Customer(); 
+			boolean var=false;
+			String expression1="^[1-9][0-9]*";
+			boolean flag=false;
+			while(!flag){
+				try {
+
+					System.out.println("Enter customer Id");
+					int customerid=sc.nextInt();
+					flag=true;
+					String num=Integer.toString(customerid);
+					var=num.matches(expression1);
+					if(!var)
+					{
+						sc.next();
+						System.out.println("Invalid customer Id!");
+
+
+					}
+					else
+					{
+						bean.setCustomerid(customerid);
+					}
+				}catch(Exception e)
+				{
+					sc.next();
+					System.out.println("Invalid type of input");
+				}
+
+			}
+
+			do {
+				String name1="^[A-Z][a-z]*";
+				System.out.println("Enter customer name");
+				String name = sc.next();
+				var=name.matches(name1);
+				if(!var)
+					System.out.println("Invalid customer name!");
+				else
+				{
+					bean.setCustomerName(name);
+				}
+			}while(!var);
+
+			do {
+				String exp="^[0-9A-Za-z]*";
+				System.out.println("Enter street address 1");
+				String add1 = sc.next();
+				sc.nextLine();
+				var=add1.matches(exp);
+				if(!var)
+					System.out.println("Invalid Street address!");
+				else
+				{
+					bean.setStreetAddress(add1);
+				}
+			}while(!var);
+			do {
+				String exp1="^[0-9A-Za-z]*";
+				System.out.println("Enter street address 2");
+				String add2 = sc.next();
+				sc.nextLine();
+				var=add2.matches(exp1);
+				if(!var)
+					System.out.println("Invalid Street address2!");
+				else
+				{
+					bean.setStreetAddress2(add2);
+				}
+			}while(!var);
+			do {
+				String exp4="^[A-Za-z]*";
+				System.out.println("Enter town");
+				String tow = sc.next();
+				var=tow.matches(exp4);
+				if(!var)
+					System.out.println("Invalid Town");
+				else
+				{
+					bean.setTown(tow);
+				}
+			}while(!var);
+			do {
+				String exp5="^[1-9][0-9]{5}$";
+				System.out.println("Enter postal code");
+				String code = sc.next();
+				var=code.matches(exp5);
+				if(!var)
+					System.out.println("Invalid Postal code");
+				else
+				{
+					bean.setPostalCode(code);
+				}
+			}while(!var);
+			do {
+				String exp7="^(.+)@(.+)$";
+				System.out.println("Enter email");
+				String mail = sc.next();
+				var=mail.matches(exp7);
+				if(!var)
+					System.out.println("Invalid Email");
+				else
+				{
+					bean.setEmail(mail);
+				}
+			}while(!var);
+			
+			boolean var1=false;
+			String exp8="^[6-9][0-9]{9}$";
+			boolean flag1=false;
+			while(!flag1){
+				try {
+
+					System.out.println("Enter Telephone Number");
+					long telephone=sc.nextLong();
+					flag1=true;
+					String num=Long.toString(telephone);
+					var1=num.matches(exp8);
+					if(!var1)
+					{
+						//sc.next();
+						System.out.println("Invalid Telephone number Id!");
+					}
+					else
+					{
+						bean.setTelePhoneno(telephone);
+					}
+				}catch(Exception e)
+				{
+					//sc.next();
+					System.out.println("Invalid type of input");
+				}
+
+			
+			/*String exp8="^[6-9][0-9]{9}$";
+			boolean var1=false;
+			boolean flag1=false;
+			while(!flag1) {
+				try
+				{
+					System.out.println("Enter telephone");
+					long tele = sc.nextLong();
+					flag1=true;
+					String num=Long.toString(tele);
+					var1=num.matches(exp8);
+					if(!var1)
+					{
+						//sc.next();
+						System.out.println("Invalid Telephone number");
+					}
+					else
+					{
+						bean.setTelePhoneno(tele);
+					}
+				}
+
+				catch(Exception e)
+				{
+					//sc.next();
+					System.out.println("U are giving a wrong type of input!!");
+				}
+			}*/
+			boolean check=false;
+			try {
+				check= service.addCustomer(bean);
+			}catch(DuplicateEntryException e)
+			{
+				System.err.println(e.toString());
+			}
+				if(check)
+				{
+					System.out.println("Customer added to list");
+				}
+				
+			}
+			break;
+			
+
+			case 2 :System.out.println("Enter the customer id to delete");
+			int customerid1=sc.nextInt();
+			boolean check1=service.deleteCustomer(customerid1);
+			if(check1)
+			{
+				System.out.println("Customer deleted...");
+			}
+			else
+			{
+				System.out.println("Customer couldnt be deleted!!");
+			}
+
+			break;
+			case 3 :System.out.println("Enter the customerId");
+			int id=sc.nextInt();
+			Customer customer=new Customer();
+			System.out.println("Enter the name to be modidfied...");
+			customer.setCustomerName(sc.next());
+			System.out.println("Enter the street1 to be modidfied...");
+			customer.setStreetAddress(sc.next());
+			System.out.println("Enter the street2 to be modidfied...");
+			customer.setStreetAddress2(sc.next());
+			System.out.println("Enter the town to be modidfied...");
+			customer.setTown(sc.next());
+			System.out.println("Enter the postalcode to be modidfied...");
+			customer.setPostalCode(sc.next());
+			System.out.println("Enter the telephone to be modidfied...");
+			customer.setTelePhoneno(sc.nextLong());
+			System.out.println("Enter the email to be modidfied...");
+			customer.setEmail(sc.next());
+			boolean check11=service.updateCustomer(id,customer);
+			if(check11)
+			{
+				System.out.println("Customer modified...");
+			}
+			else
+			{
+				System.err.println("Customer Id doesnot exist...");
+			}
+
+			break;
+			case 4: List<Customer> l1=service.getCustomers();
+			if(l1!=null)
+			{
+				for(Customer customer1:l1) {
+					System.out.println(customer1);
+				}
+			}
+			break;
+			case 5:Home.main();
+			break;
+
+			}
+		}
+	}
+
+}
+

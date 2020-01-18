@@ -1,0 +1,45 @@
+package com.capgemini.forestmanagementspringrest.services;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.capgemini.forestmanagementspringrest.dao.CustomerDAO;
+import com.capgemini.forestmanagementspringrest.dto.Haulier;
+@Service
+public class HaulierServicesImpl implements HaulierServices{
+	@Autowired
+	private HaulierDAO dao;
+
+	@Override
+	public boolean addHaulier(Haulier bean) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean deleteHaulier(int HaulierId) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Haulier getHaulier(int HaulierId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Haulier> getHauliers() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean updateHaulier(int haulierId, String haulierName, String email, long telephoneNumber) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+}

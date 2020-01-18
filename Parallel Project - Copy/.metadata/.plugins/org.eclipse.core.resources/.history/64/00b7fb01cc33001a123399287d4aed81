@@ -1,0 +1,21 @@
+package com.capgemini.forestmanagementspringrest.services;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.capgemini.forestmanagementspringrest.dao.AdminDAO;
+
+@Service
+public class AdminServicesImpl implements AdminServices{
+	
+	@Autowired
+	private AdminDAO dao;
+	@Override
+	public boolean login(int id, String password) {
+		
+		return dao.login(id,password);
+	}
+
+	
+
+}

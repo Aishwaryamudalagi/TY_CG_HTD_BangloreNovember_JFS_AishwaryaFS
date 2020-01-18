@@ -1,0 +1,20 @@
+package com.capgemini.forestmanagementspringrest.services;
+
+import java.util.List;
+
+import com.capgemini.forestmanagementspringrest.dto.Client;
+
+
+
+public interface ClientServices {
+	public boolean addClient(Client bean);
+	public boolean deleteClient(String email);
+	public List<Client> getClients();
+	
+	public Client login(Client client);
+	public Client getClient(String email);
+	boolean updateClient(int clientId,String email,String password, String role);
+	
+
+
+}

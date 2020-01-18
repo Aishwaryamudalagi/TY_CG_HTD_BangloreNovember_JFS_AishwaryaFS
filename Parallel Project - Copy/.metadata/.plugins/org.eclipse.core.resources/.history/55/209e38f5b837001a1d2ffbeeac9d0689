@@ -1,0 +1,100 @@
+package com.capgemini.forestrymanagementsystem.dao;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+import com.capgemini.forestrymanagementsystem.bean.CustomerBean;
+import com.capgemini.forestrymanagementsystem.bean.OrderBean;
+
+public class OrderDAOImpl implements OrderDAO{
+	Scanner sc = new Scanner(System.in);
+	private List<OrderBean> orderbeans=new ArrayList<OrderBean>();
+
+	@Override
+	public boolean addOrder(OrderBean bean) {
+		
+		for(OrderBean orderbean : orderbeans)
+		{
+			if(orderbean.getOrderNo()==bean.getOrderNo())
+			{
+				return false;
+			}
+		}
+		orderbeans.add(bean);
+		{
+			return true;
+		}
+		
+	}
+
+	@Override
+	public boolean deleteOrder(int orderno) {
+		for(OrderBean orderbean : orderbeans)
+		{
+			OrderBean bean = null;
+			if(orderbean.getOrderNo()==orderno)
+			{
+				bean=orderbean;
+			}
+		
+		if(bean!=null)
+		{
+			orderbeans.remove(bean);
+			return true;
+		}
+	}
+		return false;
+	}
+
+	@Override
+	public OrderBean getOrder(int orderno) {
+		for(OrderBean orderbean : orderbeans)
+		{
+			
+			if(orderbean.getOrderNo()==orderno)
+			{
+				return orderbean;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public List<OrderBean> getOrders() {
+		
+		return orderbeans;
+	}
+
+	@Override
+	public boolean modify(int orderno,OrderBean order) {
+		for(OrderBean orderBean:orderbeans)
+		{
+			if(orderBean.getOrderNo()==orderno)
+			{
+				System.out.println("Choose the option\n1.Customer Id\n2.Product Id\n3.Haulier Id\n4.Delivery date");
+				int choice=sc.nextInt();
+				switch(choice)
+				{
+				case 1 : System.out.println("Enter the Id to be modified");
+				orderBean.setCustomerId(sc.nextInt());
+							break;
+				case 2 : System.out.println("Enter the Product to be modified");
+				orderBean.setProductId(sc.nextInt());
+							break;
+				case 3 : System.out.println("Enter the Haulier to be modified");
+				orderBean.setHaulierId(sc.nextInt());
+							break;
+				case 4 : System.out.println("Enter the Delivery date to be modified");
+				orderBean.setDeliveryDate(sc.next());
+							break;			
+				}
+				
+			}
+			return true;
+		}
+
+		return false;
+	}
+
+}

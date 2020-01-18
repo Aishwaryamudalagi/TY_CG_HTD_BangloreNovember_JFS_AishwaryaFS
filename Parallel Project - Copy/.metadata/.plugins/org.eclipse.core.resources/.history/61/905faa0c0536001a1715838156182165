@@ -1,0 +1,12 @@
+package com.capgemini.forestmanagementspringrest.dao;
+
+import java.util.List;
+public class HaulierDAO {
+	public boolean addHaulier(Haulier bean);
+	public boolean deleteHaulier(int haulierId);
+	public Haulier getHaulier(int customerid);
+	public List<Customer> getCustomers();
+	public boolean updateCustomer(int customerId,String customerName,String streetAddress,String streetAddress2,String town,
+			String postalCode,String email,Long telePhoneNo);
+
+}

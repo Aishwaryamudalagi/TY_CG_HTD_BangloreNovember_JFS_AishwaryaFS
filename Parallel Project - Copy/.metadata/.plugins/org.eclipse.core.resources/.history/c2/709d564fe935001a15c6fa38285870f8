@@ -1,0 +1,14 @@
+
+package com.capgemini.forestmanagementspringrest.dao;
+
+import java.util.List;
+public interface HaulierDAO {
+
+	public boolean addHaulier(Haulier bean);
+	public boolean deleteHaulier(int haulierId);
+	public boolean updateHaulier(int haulierId,Haulier bean);
+	public List<Haulier> getHauliers();
+	public Haulier getHaulier(int haulierid);
+}
+
+
